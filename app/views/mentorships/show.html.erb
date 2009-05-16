@@ -1,0 +1,38 @@
+<p>
+  <b>Mentee:</b>
+  <%=h @mentorship.mentee_id %>
+</p>
+
+<p>
+  <b>Mentor:</b>
+  <%=h @mentorship.mentor_id %>
+</p>
+
+<p>
+  <b>Sender:</b>
+  <%=h @mentorship.sender_id %>
+</p>
+
+<p>
+  <b>Receiver:</b>
+  <%=h @mentorship.receiver_id %>
+</p>
+
+<p>
+  <b>Accepted at:</b>
+  <%=h @mentorship.accepted_at %>
+</p>
+
+<p>
+  <b>Rejected at:</b>
+  <%=h @mentorship.rejected_at %>
+</p>
+
+<p>
+  <b>Completed at:</b>
+  <%=h @mentorship.completed_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_mentorship_path(@mentorship) %> |
+<%= link_to 'Back', mentorships_path %>

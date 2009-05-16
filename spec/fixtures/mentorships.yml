@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  mentee_id: 1
+  mentor_id: 1
+  sender_id: 1
+  receiver_id: 1
+  accepted_at: 2009-05-16 16:11:55
+  rejected_at: 2009-05-16 16:11:55
+  completed_at: 2009-05-16 16:11:55
+
+two:
+  mentee_id: 1
+  mentor_id: 1
+  sender_id: 1
+  receiver_id: 1
+  accepted_at: 2009-05-16 16:11:55
+  rejected_at: 2009-05-16 16:11:55
+  completed_at: 2009-05-16 16:11:55

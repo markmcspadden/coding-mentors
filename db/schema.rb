@@ -9,7 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090516063734) do
+ActiveRecord::Schema.define(:version => 20090516211155) do
+
+  create_table "mentorships", :force => true do |t|
+    t.integer  "mentee_id"
+    t.integer  "mentor_id"
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.datetime "accepted_at"
+    t.datetime "rejected_at"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
