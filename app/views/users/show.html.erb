@@ -1,0 +1,43 @@
+<p>
+  <b>Name:</b>
+  <%=h @user.name %>
+</p>
+
+<p>
+  <b>Master skills:</b>
+  <%=h @user.master_skills %>
+</p>
+
+<p>
+  <b>Intermediate skills:</b>
+  <%=h @user.intermediate_skills %>
+</p>
+
+<p>
+  <b>Newbie skills:</b>
+  <%=h @user.newbie_skills %>
+</p>
+
+<p>
+  <b>Remote availability:</b>
+  <%=h @user.remote_availability %>
+</p>
+
+<p>
+  <b>Local availability:</b>
+  <%=h @user.local_availability %>
+</p>
+
+<p>
+  <b>Available to mentor:</b>
+  <%=h @user.available_to_mentor %>
+</p>
+
+<p>
+  <b>Available to be mentored:</b>
+  <%=h @user.available_to_be_mentored %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

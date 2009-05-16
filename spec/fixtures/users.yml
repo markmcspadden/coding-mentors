@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  master_skills: MyText
+  intermediate_skills: MyText
+  newbie_skills: MyText
+  remote_availability: MyString
+  local_availability: MyString
+  available_to_mentor: false
+  available_to_be_mentored: false
+
+two:
+  name: MyString
+  master_skills: MyText
+  intermediate_skills: MyText
+  newbie_skills: MyText
+  remote_availability: MyString
+  local_availability: MyString
+  available_to_mentor: false
+  available_to_be_mentored: false
