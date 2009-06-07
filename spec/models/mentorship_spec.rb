@@ -11,9 +11,27 @@ describe Mentorship do
       :rejected_at => Time.now,
       :completed_at => Time.now
     }
+
+    @mentorship = Mentorship.new(@valid_attributes)
   end
 
   it "should create a new instance given valid attributes" do
-    Mentorship.create!(@valid_attributes)
+    @mentorship.should be_valid
   end
+  
+  describe "associations" do
+    it "should have a mentor" do
+      @mentorship.should respond_to("mentor")
+    end
+    it "should have a mentee" do
+      @mentorship.should respond_to("mentee")      
+    end
+    it "should have a sender" do
+      @mentorship.should respond_to("sender")      
+    end
+    it "should have a receiver" do
+      @mentorship.should respond_to("receiver")      
+    end
+    
+  end # associations
 end
