@@ -46,6 +46,14 @@ describe Mentorship do
         @mentorship.accept(@then)
         @mentorship.accepted_at.should == @then
       end
+      it "should allow the accepted_at attribute to be set by passing a 1 (http param for true) into an accepted method" do
+        @mentorship.accepted = "1"
+        @mentorship.accepted_at.should == @now
+      end
+      it "should allow the accepted_at attribute to be cleared by passing a 0 (http param for true) into an accepted method" do
+        @mentorship.accepted = "0"
+        @mentorship.accepted_at.should == nil
+      end
     end # accepted
     describe "rejected" do
       it "should check to see if it has been rejected" do
@@ -69,6 +77,14 @@ describe Mentorship do
         @mentorship.reject(@then)
         @mentorship.rejected_at.should == @then
       end
+      it "should allow the rejected_at attribute to be set by passing a 1 (http param for true) into an rejected method" do
+        @mentorship.rejected = "1"
+        @mentorship.rejected_at.should == @now
+      end
+      it "should allow the rejected_at attribute to be cleared by passing a 0 (http param for true) into an rejected method" do
+        @mentorship.rejected = "0"
+        @mentorship.rejected_at.should == nil
+      end      
     end # rejected
     describe "completed" do
       it "should check to see if it has been completed" do
@@ -92,6 +108,14 @@ describe Mentorship do
         @mentorship.complete(@then)
         @mentorship.completed_at.should == @then
       end
+      it "should allow the completed_at attribute to be set by passing a 1 (http param for true) into an completed method" do
+        @mentorship.completed = "1"
+        @mentorship.completed_at.should == @now
+      end
+      it "should allow the completed_at attribute to be cleared by passing a 0 (http param for true) into an completed method" do
+        @mentorship.completed = "0"
+        @mentorship.completed_at.should == nil
+      end      
     end # completed    
   end # state 
   
