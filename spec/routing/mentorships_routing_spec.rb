@@ -18,13 +18,13 @@ describe MentorshipsController do
       route_for(:controller => "mentorships", :action => "edit", :id => "1").should == "/mentorships/1/edit"
     end
 
-  it "maps #create" do
-    route_for(:controller => "mentorships", :action => "create").should == {:path => "/mentorships", :method => :post}
-  end
+    it "maps #create" do
+      route_for(:controller => "mentorships", :action => "create").should == {:path => "/mentorships", :method => :post}
+    end
 
-  it "maps #update" do
-    route_for(:controller => "mentorships", :action => "update", :id => "1").should == {:path =>"/mentorships/1", :method => :put}
-  end
+    it "maps #update" do
+      route_for(:controller => "mentorships", :action => "update", :id => "1").should == {:path =>"/mentorships/1", :method => :put}
+    end
   
     it "maps #destroy" do
       route_for(:controller => "mentorships", :action => "destroy", :id => "1").should == {:path =>"/mentorships/1", :method => :delete}
