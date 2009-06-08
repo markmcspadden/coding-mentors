@@ -57,9 +57,7 @@ class UserSkillsController < ApplicationController
         format.html { render :action => "new" }
         format.xml  { render :xml => @user_skill.errors, :status => :unprocessable_entity }
         format.js {
-          render :update do |page|
-            page.alert "Skill failed to be added. :("
-          end
+          render :partial => "skills", :locals => {:level => @user_skill.level, :user => @user_skill.user, :errors => @user_skill.errors.full_messages}
         }        
       end
     end

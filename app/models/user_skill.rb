@@ -3,6 +3,9 @@ class UserSkill < ActiveRecord::Base
   belongs_to :user
   belongs_to :skill
   
+  # VALIDATIONS
+  validates_uniqueness_of :skill_id, :scope => :user_id, :message => "has already be assigned by you"
+  
   # TODO: after_save update the cooresponding user text fields
   # This will probably used for better faster indexing
   # But for now it's on the back burner

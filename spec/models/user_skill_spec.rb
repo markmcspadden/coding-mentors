@@ -15,6 +15,17 @@ describe UserSkill do
     @user_skill.should be_valid
   end
   
+  describe "validations" do
+    it "should not allow the same tag to be attributed to a user multiple times" do
+      @previous = mock_model(UserSkill)
+      
+      UserSkill.should_receive(:exists?).and_return(@previous)
+      
+      @user_skill.should_not be_valid
+      @user_skill.errors.full_messages.should include("Skill has already be assigned by you")
+    end
+  end # validations
+  
   describe "associations" do
     it "should have a user" do
       @user_skill.should respond_to("user")

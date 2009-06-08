@@ -80,6 +80,8 @@ describe UserSkillsController do
     describe "with invalid params" do
       before(:each) do
         UserSkill.stub!(:new).and_return(mock_user_skill(:save => false))
+        @errors = mock("errors", :full_messages => "Skill has already been assigned by you.")
+        mock_user_skill.stub!(:errors).and_return(@errors)
       end
       
       it "assigns a newly created but unsaved user_skill as @user_skill" do
@@ -93,12 +95,24 @@ describe UserSkillsController do
         response.should render_template('new')
       end
       
-      it "should responds with a JS alert on AJAX request" do
-        page = mock("page")
-        controller.should_receive(:render).with(:update).and_yield(page)
-        page.should_receive(:alert).with(/failed/i)
+      # it "should responds with a JS alert on AJAX request" do
+      #   page = mock("page")
+      #   controller.should_receive(:render).with(:update).and_yield(page)
+      #   page.should_receive(:alert).with(/failed/i)
+      #   
+      #   post :create, :user_skill => {}, :format => "js"
+      # end
+      it "should still render the skills partial on failed AJAX request" do
+        # page = mock("page")
+        # controller.should_receive(:render).with(:update).and_yield(page)
+        # page.should_receive(:)
+        @user = mock_model(User)
         
-        post :create, :user_skill => {}, :format => "js"
+        mock_user_skill.should_receive(:level).and_return(0)
+        mock_user_skill.should_receive(:user).and_return(@user)
+        controller.should_receive(:render).with(:partial => "skills", :locals => {:level => 0, :user => @user, :errors => @errors.full_messages})
+        
+        post :create, :user_skill => {:level => 0, :user_id => @user.id}, :format => "js"
       end
     end
     

@@ -1,3 +1,10 @@
+<% errors = errors ? errors : [] %>
+<% unless errors.empty? %>
+<div class="errors">
+  <%= errors %>
+</div>
+<% end %>
+
 <div id="skills_<%= level %>">
   <% # TODO: Remove skill %>
   <% # TODO: Move skill?? %>
