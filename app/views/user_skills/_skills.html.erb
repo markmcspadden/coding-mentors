@@ -10,14 +10,20 @@
   <div id="new_skill_<%= level %>" style="display: none;">
     <% instance_variable_set "@user_skill", UserSkill.new(:level => level, :user_id => user.id)%>
 
-    <% form_remote_for(:user_skill, @user_skill, :url => user_skills_path, :update => "skills_#{level}", :html => {:method => :post, :class => "new_user_skill", :id => "new_user_skill"}) do |f| %>
+    <% form_remote_for(:user_skill, @user_skill, :url => user_skills_path, :update => "skills_#{level}", :html => {:method => :post, :class => "new_user_skill", :id => "new_user_skill_#{level}"}) do |f| %>
       <p>
         <%= f.label "Skill" %>
         <%= f.text_field :skill_name %>
         <%= f.hidden_field :level %>
         <%= f.hidden_field :user_id %>
         <%= f.submit 'Add' %>
+        <div id="autocomplete_skill_name_<%= level %>" class="autocomplete"></div>
       </p>
     <% end %>
   </div>
+  
+  <%# OPTIMIZE: This is going to be REALLLLY SLOW at more than 100 Skills %>
+  <script type="text/javascript">
+    new Autocompleter.Local($('new_user_skill_<%= level %>').getInputs('text', 'user_skill[skill_name]').first(), 'autocomplete_skill_name_<%= level %>', [ <%= Skill.all.collect{ |s| "\"#{escape_javascript(s.name)}\"" }.join(",") %> ], {});
+  </script>
 </div>
