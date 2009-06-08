@@ -24,7 +24,18 @@ class MentorshipsController < ApplicationController
   # GET /mentorships/new
   # GET /mentorships/new.xml
   def new
+    if params[:mentor_id]
+      @mentor = User.find(params[:mentor_id])
+    elsif params[:mentee_id]
+      @mentee = User.find(params[:mentee_id])
+    else
+      redirect_to mentorships_path and return false
+    end
+    
     @mentorship = Mentorship.new
+    
+    @mentorship.mentor_id = @mentor.id if @mentor
+    @mentorship.mentee_id = @mentee.id if @mentee
 
     respond_to do |format|
       format.html # new.html.erb
