@@ -2,13 +2,13 @@
 
 <% if @user.available_to_mentor %>
   <p>
-    <%= link_to_function "Available as a Mentor", "alert('Not Yet');" %>
+    <%= link_to "Ask to be Mentored by #{@user.name}", new_mentorship_path(:mentor_id => @user.id) %>
   </p>
 <% end %>
 
 <% if @user.available_to_be_mentored %>
   <p>
-    <%= link_to_function "Looking for a Mentor", "alert('Not Yet');" %>
+    <%= link_to "Offer to Mentor #{@user.name}", new_mentorship_path(:mentee_id => @user.id) %>
   </p>
 <% end %>
 
