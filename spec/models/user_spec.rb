@@ -28,4 +28,49 @@ describe User do
       @user.should respond_to("skills")
     end
   end # associations
+  
+
+  
+  describe "user skills and skills by level" do
+    before(:each) do
+      @s0 = mock_model(Skill)
+      @s1 = mock_model(Skill)
+      @s2 = mock_model(Skill)
+      
+      @us0 = mock_model(UserSkill, :skill => @s0, :level => 0)
+      @us1 = mock_model(UserSkill, :skill => @s1, :level => 1)
+      @us2 = mock_model(UserSkill, :skill => @s2, :level => 2)
+      
+      @user.stub!(:user_skills).and_return([@us0, @us1, @us2])
+      @user.stub!(:skills).and_return([@s0, @s1, @s2])
+    end 
+    it "should find the user skills by level" do
+      @user.user_skills_by_level(0).should == [@us0]
+      @user.user_skills_by_level(1).should == [@us1]
+      @user.user_skills_by_level(2).should == [@us2]
+    end   
+    it "should find the skills by level" do
+      @user.skills_by_level(0).should == [@s0]
+      @user.skills_by_level(1).should == [@s1]
+      @user.skills_by_level(2).should == [@s2]
+    end
+    it "should have novice user skills" do
+      pending "not yet implemented"
+    end
+    it "should have intermediate user skills" do
+      pending "not yet implemented"      
+    end
+    it "should have master user skills" do
+      pending "not yet implemented"      
+    end    
+    it "should have novice skills" do
+      pending "not yet implemented"      
+    end
+    it "should have intermediate skills" do
+      pending "not yet implemented"      
+    end
+    it "should have master skills" do
+      pending "not yet implemented"      
+    end
+  end # skills (by level)
 end

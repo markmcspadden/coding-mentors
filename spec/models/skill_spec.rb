@@ -13,6 +13,10 @@ describe Skill do
     @skill.should be_valid
   end
   
+  it "should display the name as the default to_s" do
+    @skill.to_s.should == "value for name"
+  end
+  
   describe "associations" do
     it "should have user_skills" do
       @skill.should respond_to("user_skills")

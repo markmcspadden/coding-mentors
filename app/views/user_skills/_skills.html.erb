@@ -1,0 +1,21 @@
+<div id="skills_<%= level %>">
+  <% user.skills_by_level(level).each do |skill| %>
+    <%= skill %><br/>
+  <% end %>
+
+  <%= link_to_function "Add Skill", "Element.toggle('new_skill')" %>
+
+  <div id="new_skill" style="display: none;">
+    <% instance_variable_set "@user_skill", UserSkill.new(:level => level, :user_id => user.id)%>
+
+    <% form_remote_for(:user_skill, @user_skill, :url => user_skills_path, :update => "skills_#{level}", :html => {:method => :post, :class => "new_user_skill", :id => "new_user_skill"}) do |f| %>
+      <p>
+        <%= f.label "Skill" %>
+        <%= f.text_field :skill_name %>
+        <%= f.hidden_field :level %>
+        <%= f.hidden_field :user_id %>
+        <%= f.submit 'Add' %>
+      </p>
+    <% end %>
+  </div>
+</div>

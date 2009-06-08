@@ -16,7 +16,7 @@ describe UsersController do
 
   describe "GET show" do
     it "assigns the requested user as @user" do
-      User.stub!(:find).with("37").and_return(mock_user)
+      User.stub!(:find).with("37", :include => [:skills]).and_return(mock_user)
       get :show, :id => "37"
       assigns[:user].should equal(mock_user)
     end

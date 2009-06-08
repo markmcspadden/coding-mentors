@@ -39,17 +39,28 @@ class UserSkillsController < ApplicationController
 
   # POST /user_skills
   # POST /user_skills.xml
-  def create
+  def create    
     @user_skill = UserSkill.new(params[:user_skill])
 
     respond_to do |format|
       if @user_skill.save
         flash[:notice] = 'UserSkill was successfully created.'
         format.html { redirect_to(@user_skill) }
+        format.js {
+          # render :update do |page|
+          #   page.alert "Skill was added successfully"
+          # end
+          render :partial => "skills", :locals => {:level => @user_skill.level, :user => @user_skill.user}
+        }
         format.xml  { render :xml => @user_skill, :status => :created, :location => @user_skill }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @user_skill.errors, :status => :unprocessable_entity }
+        format.js {
+          render :update do |page|
+            page.alert "Skill failed to be added. :("
+          end
+        }        
       end
     end
   end

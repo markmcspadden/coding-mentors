@@ -41,6 +41,10 @@ describe UserSkillsController do
   describe "POST create" do
     
     describe "with valid params" do
+      before(:each) do
+        UserSkill.stub!(:new).and_return(mock_user_skill(:save => true))
+      end
+      
       it "assigns a newly created user_skill as @user_skill" do
         UserSkill.stub!(:new).with({'these' => 'params'}).and_return(mock_user_skill(:save => true))
         post :create, :user_skill => {:these => 'params'}
@@ -48,13 +52,36 @@ describe UserSkillsController do
       end
 
       it "redirects to the created user_skill" do
-        UserSkill.stub!(:new).and_return(mock_user_skill(:save => true))
         post :create, :user_skill => {}
         response.should redirect_to(user_skill_url(mock_user_skill))
+      end
+      
+      # it "should responds with a JS alert on AJAX request" do
+      #   page = mock("page")
+      #   controller.should_receive(:render).with(:update).and_yield(page)
+      #   page.should_receive(:alert).with(/success/i)
+      #   
+      #   post :create, :user_skill => {}, :format => "js"
+      # end
+      it "should render the skills partial on successful AJAX request" do
+        # page = mock("page")
+        # controller.should_receive(:render).with(:update).and_yield(page)
+        # page.should_receive(:)
+        @user = mock_model(User)
+        
+        mock_user_skill.should_receive(:level).and_return(0)
+        mock_user_skill.should_receive(:user).and_return(@user)
+        controller.should_receive(:render).with(:partial => "skills", :locals => {:level => 0, :user => @user})
+        
+        post :create, :user_skill => {:level => 0, :user_id => @user.id}, :format => "js"
       end
     end
     
     describe "with invalid params" do
+      before(:each) do
+        UserSkill.stub!(:new).and_return(mock_user_skill(:save => false))
+      end
+      
       it "assigns a newly created but unsaved user_skill as @user_skill" do
         UserSkill.stub!(:new).with({'these' => 'params'}).and_return(mock_user_skill(:save => false))
         post :create, :user_skill => {:these => 'params'}
@@ -62,9 +89,16 @@ describe UserSkillsController do
       end
 
       it "re-renders the 'new' template" do
-        UserSkill.stub!(:new).and_return(mock_user_skill(:save => false))
         post :create, :user_skill => {}
         response.should render_template('new')
+      end
+      
+      it "should responds with a JS alert on AJAX request" do
+        page = mock("page")
+        controller.should_receive(:render).with(:update).and_yield(page)
+        page.should_receive(:alert).with(/failed/i)
+        
+        post :create, :user_skill => {}, :format => "js"
       end
     end
     

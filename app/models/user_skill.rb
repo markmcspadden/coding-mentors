@@ -3,6 +3,13 @@ class UserSkill < ActiveRecord::Base
   belongs_to :user
   belongs_to :skill
   
+  # TODO: after_save update the cooresponding user text fields
+  # This will probably used for better faster indexing
+  # But for now it's on the back burner
+  # user.master_skills
+  # user.intermediate_skills
+  # user.newbie_skills
+  
   def skill_name
     skill ? skill.name : nil
   end
