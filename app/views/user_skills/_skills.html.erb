@@ -5,9 +5,9 @@
     <%= skill %><br/>
   <% end %>
 
-  <%= link_to_function "Add Skill", "Element.toggle('new_skill')" %>
+  <%= link_to_function "Add Skill", "Element.toggle('new_skill_#{level}')" %>
 
-  <div id="new_skill" style="display: none;">
+  <div id="new_skill_<%= level %>" style="display: none;">
     <% instance_variable_set "@user_skill", UserSkill.new(:level => level, :user_id => user.id)%>
 
     <% form_remote_for(:user_skill, @user_skill, :url => user_skills_path, :update => "skills_#{level}", :html => {:method => :post, :class => "new_user_skill", :id => "new_user_skill"}) do |f| %>
