@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090516211155) do
+ActiveRecord::Schema.define(:version => 20090608104727) do
 
   create_table "mentorships", :force => true do |t|
     t.integer  "mentee_id"
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(:version => 20090516211155) do
     t.datetime "accepted_at"
     t.datetime "rejected_at"
     t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skills", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_skills", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "skill_id"
+    t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :user_skills
+
   map.resources :mentorships
 
   map.resources :users

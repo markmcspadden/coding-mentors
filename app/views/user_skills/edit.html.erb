@@ -1,0 +1,24 @@
+<h1>Editing user_skill</h1>
+
+<% form_for(@user_skill) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :skill_id %><br />
+    <%= f.text_field :skill_id %>
+  </p>
+  <p>
+    <%= f.label :level %><br />
+    <%= f.text_field :level %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @user_skill %> |
+<%= link_to 'Back', user_skills_path %>

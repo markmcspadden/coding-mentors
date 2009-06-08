@@ -12,9 +12,20 @@ describe User do
       :available_to_mentor => false,
       :available_to_be_mentored => false
     }
+    
+    @user = User.new(@valid_attributes)
   end
 
   it "should create a new instance given valid attributes" do
-    User.create!(@valid_attributes)
+    @user.should be_valid
   end
+  
+  describe "associations" do
+    it "should have user_skills" do
+      @user.should respond_to("user_skills")
+    end
+    it "should have skills (through user_skills)" do
+      @user.should respond_to("skills")
+    end
+  end # associations
 end
