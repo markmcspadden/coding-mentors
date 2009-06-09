@@ -40,6 +40,16 @@
   <%=h @mentorship.completed_at %>
 </p>
 
+<p>
+  <b>Sender Note:</b>
+  <%=h @mentorship.sender_note %>
+</p>
+
+<p>
+  <b>Receiver Note:</b>
+  <%=h @mentorship.receiver_note %>
+</p>
+
 
 <%= link_to 'Edit', edit_mentorship_path(@mentorship) %> |
 <%= link_to 'Back', mentorships_path %>
