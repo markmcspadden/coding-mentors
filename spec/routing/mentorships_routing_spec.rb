@@ -29,6 +29,10 @@ describe MentorshipsController do
     it "maps #destroy" do
       route_for(:controller => "mentorships", :action => "destroy", :id => "1").should == {:path =>"/mentorships/1", :method => :delete}
     end
+    
+    it "maps #respond" do
+      route_for(:controller => "mentorships", :action => "respond", :id => "1").should == {:path =>"/mentorships/1/respond", :method => :get}
+    end
   end
 
   describe "route recognition" do
@@ -59,5 +63,9 @@ describe MentorshipsController do
     it "generates params for #destroy" do
       params_from(:delete, "/mentorships/1").should == {:controller => "mentorships", :action => "destroy", :id => "1"}
     end
+    
+    it "generates params for #respond" do
+      params_from(:get, "/mentorships/1/respond").should == {:controller => "mentorships", :action => "respond", :id => "1"}
+    end    
   end
 end

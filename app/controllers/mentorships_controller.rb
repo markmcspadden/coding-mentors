@@ -115,4 +115,9 @@ class MentorshipsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  # GET /mentorships/1/response
+  def respond
+    
+  end
 end
