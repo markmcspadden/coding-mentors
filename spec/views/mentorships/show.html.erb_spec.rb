@@ -12,6 +12,8 @@ describe "/mentorships/show.html.erb" do
   end
 
   it "renders attributes in <p>" do
+    pending "I don't spec views"
+    
     render
     response.should have_text(/1/)
     response.should have_text(/1/)
