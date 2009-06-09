@@ -23,22 +23,66 @@ describe MentorshipsController do
   end
 
   describe "GET new" do
-    it "assigns a new mentorship as @mentorship" do
-      User.stub!(:find).and_return(mock_model(User))
+    before(:each) do
+      @current_user = mock_model(User)
+      controller.stub!(:current_user).and_return(@current_user)
       
-      Mentorship.stub!(:new).and_return(mock_mentorship(:mentor_id= => true, :mentee_id= => true))
-      get :new, :mentor_id => 1
+      @mentor = mock_model(User)
+      User.stub!(:find).with("1").and_return(@mentor)
+    end
+    
+    def do_get(params = {})
+      params = {:mentor_id => 1} if params.blank?
+
+      get :new, params
+    end
+    
+    it "assigns a new mentorship as @mentorship" do      
+      @mentorship = mock_mentorship(:mentor_id= => true, :mentee_id= => true, :sender_id= => true, :receiver_id= => true)
+      Mentorship.stub!(:new).and_return(@mentorship)
+      
+      do_get
       assigns[:mentorship].should equal(mock_mentorship)
     end
     it "should redirect to '/mentorships' if no 'mentee_id' OR 'mentor_id' param exists" do
       get :new
       response.should redirect_to("/mentorships")
     end
-    describe "with a mentor_id" do
-      before(:each) do
-        @current_user = mock_model(User)
-        controller.stub!(:current_user).and_return(@current_user)
+    
+    describe "sender and receiver" do
+      # Let's us know who initiated this relationship
+      
+      it "should set the sender as the current user" do
+        do_get
+        assigns[:sender].should == @current_user
+      end
+      it "should set the sender_id on @mentorship to @sender.id" do
+        do_get
+        assigns[:mentorship].sender_id.should == @current_user.id
+      end
+      it "should set the receiver_id on @mentorship to @receiver.id" do
+        do_get
+        assigns[:mentorship].receiver_id.should == @mentor.id
+      end      
+      it "should set the receiver as the mentor if the current user is the mentee" do
+        @mentor = mock_model(User, :id => 32)
+        User.stub!(:find).with("32").and_return(@mentor)
         
+        do_get({:mentor_id => @mentor.id})
+        assigns[:receiver].should == @mentor
+      end
+      it "should set the receiver as the mentee if the current user is the mentor" do
+        @mentee = mock_model(User, :id => 32)
+        User.stub!(:find).with("32").and_return(@mentee)
+        
+        do_get({:mentee_id => @mentee.id})
+        assigns[:receiver].should == @mentee
+      end      
+    end # sender and receiver
+
+    
+    describe "with a mentor_id" do
+      before(:each) do        
         @user = mock_model(User)
         User.stub!(:find).and_return(@user)
       end
@@ -53,9 +97,6 @@ describe MentorshipsController do
       it "should assign the mentor as @mentor" do
         do_get
         assigns[:mentor].should equal(@user)
-      end
-      it "should set the mentee " do
-        
       end
       it "should assign the mentee as the current_user" do
         do_get
@@ -83,6 +124,10 @@ describe MentorshipsController do
         do_get
         assigns[:mentee].should equal(@user)
       end
+      it "should assign the mentor as the current_user" do
+        do_get
+        assigns[:mentor].should == @current_user
+      end      
       it "should set @mentorship.mentee_id to the id of @mentee" do
         do_get
         assigns[:mentorship].mentee_id.should == @user.id

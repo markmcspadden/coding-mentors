@@ -24,19 +24,30 @@ class MentorshipsController < ApplicationController
   # GET /mentorships/new
   # GET /mentorships/new.xml
   def new
+    
+    # Get mentor and mentee via params + current user
+    # Get sender and receiver based on current user and mentor/mentee params
     if params[:mentor_id]
       @mentor = User.find(params[:mentor_id])
       @mentee = current_user
+      @sender = current_user
+      @receiver = @mentor
     elsif params[:mentee_id]
+      @mentor = current_user
       @mentee = User.find(params[:mentee_id])
+      @sender = current_user
+      @receiver = @mentee
     else
       redirect_to mentorships_path and return false
     end
     
-    @mentorship = Mentorship.new
+    # Actually create the Mentorship object
+    @mentorship = Mentorship.new( :mentor => @mentor,
+                                  :mentee => @mentee,
+                                  :sender => @sender,
+                                  :receiver => @receiver )
     
-    @mentorship.mentor_id = @mentor.id if @mentor
-    @mentorship.mentee_id = @mentee.id if @mentee
+
 
     respond_to do |format|
       format.html # new.html.erb

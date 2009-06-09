@@ -1,28 +1,4 @@
-<p>
-  <%= f.label :mentee_id %><br />
-  <%= f.text_field :mentee_id %>
-</p>
-<p>
-  <%= f.label :mentor_id %><br />
-  <%= f.text_field :mentor_id %>
-</p>
-<p>
-  <%= f.label :sender_id %><br />
-  <%= f.text_field :sender_id %>
-</p>
-<p>
-  <%= f.label :receiver_id %><br />
-  <%= f.text_field :receiver_id %>
-</p>
-<p>
-  <%= f.label :accepted? %><br />
-  <%= f.check_box :accepted? %>
-</p>
-<p>
-  <%= f.label :rejected? %><br />
-  <%= f.check_box :rejected? %>
-</p>
-<p>
-  <%= f.label :completed? %><br />
-  <%= f.check_box :completed? %>
-</p>
+<%= f.hidden_field :mentee_id %>
+<%= f.hidden_field :mentor_id %>
+<%= f.hidden_field :sender_id %>
+<%= f.hidden_field :receiver_id %>
