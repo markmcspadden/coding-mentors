@@ -1,4 +1,11 @@
 <p>
+  <b>Skills:</b>
+  <% @mentorship.skills.each do |skill| %>
+    <%= skill %><br/>
+  <% end %>
+</p>
+
+<p>
   <b>Mentee:</b>
   <%=h @mentorship.mentee_id %>
 </p>

@@ -26,6 +26,7 @@ class MentorshipsController < ApplicationController
   def new
     if params[:mentor_id]
       @mentor = User.find(params[:mentor_id])
+      @mentee = current_user
     elsif params[:mentee_id]
       @mentee = User.find(params[:mentee_id])
     else
@@ -50,8 +51,18 @@ class MentorshipsController < ApplicationController
 
   # POST /mentorships
   # POST /mentorships.xml
-  def create
+  def create    
     @mentorship = Mentorship.new(params[:mentorship])
+    
+    # REFACTOR: This probably belongs in the model
+    # Instead of having a separate params[:skills] should just have params[:mentorship][:skills]
+    # And handle all this skill setting in the model.
+    skills = []
+    params[:skills].keys.each do |skill_id|
+      skill = Skill.find(skill_id)
+      skills << skill
+    end
+    @mentorship.skills = skills
 
     respond_to do |format|
       if @mentorship.save

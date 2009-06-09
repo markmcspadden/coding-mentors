@@ -1,3 +1,4 @@
+CREATE TABLE "mentorship_skills" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mentorship_id" integer, "skill_id" integer, "created_at" datetime, "updated_at" datetime);
 CREATE TABLE "mentorships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mentee_id" integer, "mentor_id" integer, "sender_id" integer, "receiver_id" integer, "accepted_at" datetime, "rejected_at" datetime, "completed_at" datetime, "created_at" datetime, "updated_at" datetime);
 CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL);
 CREATE TABLE "skills" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime);
@@ -11,3 +12,5 @@ INSERT INTO schema_migrations (version) VALUES ('20090516211155');
 INSERT INTO schema_migrations (version) VALUES ('20090608104610');
 
 INSERT INTO schema_migrations (version) VALUES ('20090608104727');
+
+INSERT INTO schema_migrations (version) VALUES ('20090609013249');

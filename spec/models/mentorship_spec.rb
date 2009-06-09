@@ -134,6 +134,12 @@ describe Mentorship do
     it "should have a receiver" do
       @mentorship.should respond_to("receiver")      
     end
+    it "should have mentorship skills" do
+      @mentorship.should respond_to("mentorship_skills") 
+    end
+    it "should have skills (through mentorship_skills)" do
+      @mentorship.should respond_to("skills")
+    end
     
   end # associations
 end

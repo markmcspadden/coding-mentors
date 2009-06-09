@@ -10,7 +10,10 @@
 
   <p>
     <%= f.label @mentor ? "I'd like help with:" : "I'd like to help with:" %><br />
-    <%= text_area_tag "skills" %>
+    <% [@mentor.skills, @mentee.skills].flatten.uniq.each do |skill| %>
+      <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>
+    <% end %>
+    <%#= text_area_tag "skills" %>
   </p>
   
   <p>

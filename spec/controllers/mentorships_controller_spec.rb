@@ -26,7 +26,7 @@ describe MentorshipsController do
     it "assigns a new mentorship as @mentorship" do
       User.stub!(:find).and_return(mock_model(User))
       
-      Mentorship.stub!(:new).and_return(mock_mentorship(:mentor_id= => true))
+      Mentorship.stub!(:new).and_return(mock_mentorship(:mentor_id= => true, :mentee_id= => true))
       get :new, :mentor_id => 1
       assigns[:mentorship].should equal(mock_mentorship)
     end
@@ -36,6 +36,9 @@ describe MentorshipsController do
     end
     describe "with a mentor_id" do
       before(:each) do
+        @current_user = mock_model(User)
+        controller.stub!(:current_user).and_return(@current_user)
+        
         @user = mock_model(User)
         User.stub!(:find).and_return(@user)
       end
@@ -50,6 +53,13 @@ describe MentorshipsController do
       it "should assign the mentor as @mentor" do
         do_get
         assigns[:mentor].should equal(@user)
+      end
+      it "should set the mentee " do
+        
+      end
+      it "should assign the mentee as the current_user" do
+        do_get
+        assigns[:mentee].should == @current_user
       end
       it "should set @mentorship.mentor_id to the id of @mentor" do
         do_get
@@ -89,31 +99,57 @@ describe MentorshipsController do
   end
 
   describe "POST create" do
-    
+    before(:each) do      
+      @skills = {"19" => 1, "20" => 1}
+      
+      @skill = mock_model(Skill)
+      Skill.stub!(:find).and_return(@skill)
+    end    
+    def do_post
+      post :create, :mentorship => {}, :skills => @skills
+    end
+        
     describe "with valid params" do
+      before(:each) do
+        Mentorship.stub!(:new).with({}).and_return(mock_mentorship(:save => true, :skills= => true))
+      end
+      
       it "assigns a newly created mentorship as @mentorship" do
-        Mentorship.stub!(:new).with({'these' => 'params'}).and_return(mock_mentorship(:save => true))
-        post :create, :mentorship => {:these => 'params'}
+        do_post
         assigns[:mentorship].should equal(mock_mentorship)
+      end
+      
+      it "should loop through the skills params and lookup skills" do        
+        Skill.should_receive(:find).with("19").and_return(@skill)
+        Skill.should_receive(:find).with("20").and_return(@skill)
+        
+        do_post
+      end
+      
+      it "should set the skills of the mentorship based on" do
+        mock_mentorship(:save => true)
+        mock_mentorship.should_receive(:skills=).with([@skill, @skill]).and_return(true)
+        
+        do_post
       end
 
       it "redirects to the created mentorship" do
-        Mentorship.stub!(:new).and_return(mock_mentorship(:save => true))
-        post :create, :mentorship => {}
+        Mentorship.stub!(:new).and_return(mock_mentorship(:save => true, :skills= => true))
+        do_post
         response.should redirect_to(mentorship_url(mock_mentorship))
       end
     end
     
     describe "with invalid params" do
       it "assigns a newly created but unsaved mentorship as @mentorship" do
-        Mentorship.stub!(:new).with({'these' => 'params'}).and_return(mock_mentorship(:save => false))
-        post :create, :mentorship => {:these => 'params'}
+        Mentorship.stub!(:new).with({}).and_return(mock_mentorship(:save => false, :skills= => true))
+        do_post
         assigns[:mentorship].should equal(mock_mentorship)
       end
 
       it "re-renders the 'new' template" do
-        Mentorship.stub!(:new).and_return(mock_mentorship(:save => false))
-        post :create, :mentorship => {}
+        Mentorship.stub!(:new).and_return(mock_mentorship(:save => false, :skills= => true))
+        do_post
         response.should render_template('new')
       end
     end

@@ -14,6 +14,8 @@ describe "/mentorships/new.html.erb" do
   end
 
   it "renders new mentorship form" do
+    pending "I don't spec views"
+    
     render
     
     response.should have_tag("form[action=?][method=post]", mentorships_path) do

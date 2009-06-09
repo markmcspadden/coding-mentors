@@ -4,6 +4,9 @@ class Mentorship < ActiveRecord::Base
   belongs_to :mentee, :class_name => "User"
   belongs_to :sender, :class_name => "User"
   belongs_to :receiver, :class_name => "User"
+  
+  has_many :mentorship_skills
+  has_many :skills, :through => :mentorship_skills
 
   # Setup States based on xxx_at attributes
   # I know acts_as_state exists, I just wanted to role my own to see how close it would match
