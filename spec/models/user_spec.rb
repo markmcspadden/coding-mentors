@@ -19,6 +19,9 @@ describe User do
   it "should create a new instance given valid attributes" do
     @user.should be_valid
   end
+  it "should give the name as the to_s method" do
+    @user.to_s.should == "value for name"
+  end
   
   describe "associations" do
     it "should have user_skills" do
