@@ -5,7 +5,7 @@ CREATE TABLE "open_id_authentication_nonces" ("id" INTEGER PRIMARY KEY AUTOINCRE
 CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL);
 CREATE TABLE "skills" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime);
 CREATE TABLE "user_skills" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "skill_id" integer, "level" integer, "created_at" datetime, "updated_at" datetime);
-CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "master_skills" text, "intermediate_skills" text, "newbie_skills" text, "remote_availability" varchar(255), "local_availability" varchar(255), "available_to_mentor" boolean, "available_to_be_mentored" boolean, "created_at" datetime, "updated_at" datetime, "identity_url" varchar(255));
+CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "master_skills" text, "intermediate_skills" text, "newbie_skills" text, "remote_availability" varchar(255), "local_availability" varchar(255), "available_to_mentor" boolean, "available_to_be_mentored" boolean, "created_at" datetime, "updated_at" datetime, "identity_url" varchar(255), "email" varchar(255));
 CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version");
 INSERT INTO schema_migrations (version) VALUES ('20090516063734');
 
@@ -22,3 +22,5 @@ INSERT INTO schema_migrations (version) VALUES ('20090609205953');
 INSERT INTO schema_migrations (version) VALUES ('20090610003206');
 
 INSERT INTO schema_migrations (version) VALUES ('20090610003359');
+
+INSERT INTO schema_migrations (version) VALUES ('20090610015817');

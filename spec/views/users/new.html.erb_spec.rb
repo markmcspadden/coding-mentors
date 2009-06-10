@@ -18,6 +18,8 @@ describe "/users/new.html.erb" do
   end
 
   it "renders new user form" do
+    pending "I don't spec views"
+    
     render
     
     response.should have_tag("form[action=?][method=post]", users_path) do

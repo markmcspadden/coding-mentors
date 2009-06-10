@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   end
   
   def signup
-    open_id_signup
+    open_id_signup(params[:user])
   end
   
   def destroy
@@ -37,7 +37,6 @@ class SessionsController < ApplicationController
 
     # BARE BONES (NO INFO PASSING)
     def open_id_authentication
-      p "In "
       authenticate_with_open_id do |result, identity_url|        
         if result.successful?
           if @current_user = User.find_by_identity_url(identity_url)
@@ -51,23 +50,49 @@ class SessionsController < ApplicationController
       end
     end
     
-    def open_id_signup
-      authenticate_with_open_id do |result, identity_url|        
+    def open_id_signup(options = {})
+      
+      # Setup blank user options if not passed in
+      # options[:user] = options[:user] ? options[:user] : {}
+      
+      authenticate_with_open_id(nil, :required => ["email", "http://axschema.org/contact/email", "http://schema.openid.net/contact/email", "http://openid.net/schema/contact/email"]) do |result, identity_url, registration|        
         if result.successful?
-          user = User.new(:identity_url => identity_url)
-          if user.save
-            @current_user = user
+          user = User.new(:identity_url => identity_url)#, :email => options[:user][:email], :name => options[:user][:name])
+            
+          @current_user = user  
+           assign_registration_attributes!(registration)         
+                    
+          if @current_user.save
+            
             successful_signup
           else
-            failed_signup "There was a problem with creating an account for you based on your OpenId credentials. There is probably something wrong on our end :/"
+            failed_signup "There was a problem with creating an account for you based on your OpenId registration details. There is probably something wrong on our end :/"
           end
         else
           failed_signup result.message
         end
       end
     end
+    
+    # registration is a hash containing the valid sreg keys given above
+    # use this to map them to fields of your user model
+    def assign_registration_attributes!(registration)
+      puts registration
+      y registration
+      model_to_registration_mapping.each do |model_attribute, registration_attribute|
+        unless registration[registration_attribute].blank?
+          @current_user.send("#{model_attribute}=", registration[registration_attribute])
+        end
+      end
+    end
+
+    def model_to_registration_mapping
+      { :name => 'nickname', :email => 'email', :name => 'fullname' }
+    end
 
     # ADVANCED
+    # ONLY WORKS WITH *SOME* OPENID PROVIDERS
+    # DOES NOT WORK WITH BLOGSPOT
     # def open_id_authentication(identity_url)
     #   # Pass optional :required and :optional keys to specify what sreg fields you want.
     #   # Be sure to yield registration, a third argument in the #authenticate_with_open_id block.

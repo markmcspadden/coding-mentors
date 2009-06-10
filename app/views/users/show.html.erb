@@ -1,4 +1,4 @@
-<% @content_title = @user.name %>
+<% @content_title = @user.name.to_s + " " + @user.email.to_s %>
 
 <% if @user.available_to_mentor %>
   <p>

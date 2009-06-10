@@ -1,4 +1,4 @@
-<% @content_title = "Get Started: All you need is an OpenID" %>
+<% @content_title = "Get Started: All you need is a name, an email, and an OpenID" %>
 
 <p>
   Why OpenID? kljfa dsjflkads jfkl; adjlkfajkld faj dj fajkl fdjkl; ad;fja
@@ -10,9 +10,21 @@
 <% form_tag(signup_session_url) do %>
 
   <p>
+    <label for="user[name]">Name:</label>
+    <%= text_field_tag "user[name]" %>
+  </p>
+
+  <p>
+    <label for="user[email]">Email:</label>
+    <%= text_field_tag "user[email]" %>
+  </p>
+
+  <p>
     <label for="openid_identifier">OpenID:</label>
     <%= text_field_tag "openid_identifier" %>
   </p>
+  
+  
 
   <%= hidden_field_tag "signup", 1 %>
 
