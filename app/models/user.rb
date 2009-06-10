@@ -1,10 +1,15 @@
 class User < ActiveRecord::Base
 
-  has_many :user_skills
+  has_many :user_skills, :dependent => :destroy
   has_many :skills, :through => :user_skills
 
   def to_s
     "#{name}"
+  end
+  
+  # OVERRIDE THE DEFAULT IDENTITY_URL ACCESSOR
+  def identity_url
+    OpenIdAuthentication.normalize_url(self[:identity_url])
   end
   
   def user_skills_by_level(level)

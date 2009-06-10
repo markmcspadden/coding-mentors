@@ -22,6 +22,10 @@ describe User do
   it "should give the name as the to_s method" do
     @user.to_s.should == "value for name"
   end
+  it "should properly format any open_id url" do
+    @user.identity_url = "markmcspadden.blogspot.com"
+    @user.identity_url.should == "http://markmcspadden.blogspot.com/"
+  end
   
   describe "associations" do
     it "should have user_skills" do
