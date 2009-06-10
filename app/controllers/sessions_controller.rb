@@ -16,6 +16,13 @@ class SessionsController < ApplicationController
   def signup
     open_id_signup
   end
+  
+  def destroy
+    cookies.delete :auth_token
+    reset_session
+    flash[:notice] = "You have been logged out."
+    redirect_to('/')
+  end
 
 
   protected

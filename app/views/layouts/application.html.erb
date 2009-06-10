@@ -13,7 +13,11 @@
 <body>
 
 <% if current_user %>
-  <h5>Current User: <%= current_user.name %> <%= current_user.id %></h5>
+  <h5>Current User: <%= link_to "##{current_user.id} - #{current_user.name}", user_path(current_user)  %></h5>
+  <%= link_to "logout", session_url, :method => :delete %>
+<% else %>
+  <%= link_to "login", new_session_url %> |
+  <%= link_to "signup", signup_users_url %>
 <% end %>
 
 <h1><%= @content_title %></h1>
