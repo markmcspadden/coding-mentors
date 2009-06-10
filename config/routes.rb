@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mentorships, :member => {:respond => :get}
 
   map.resources :users
+  
+  map.resource :session
 
   # The priority is based upon order of creation: first created -> highest priority.
 
