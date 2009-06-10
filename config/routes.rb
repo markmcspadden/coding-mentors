@@ -3,9 +3,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :mentorships, :member => {:respond => :get}
 
-  map.resources :users
+  map.resources :users, :collection => { :signup => :get }
   
-  map.resource :session
+  map.resource :session, :collection => { :signup => :post }
 
   # The priority is based upon order of creation: first created -> highest priority.
 

@@ -1,0 +1,26 @@
+<% @content_title = "Get Started: All you need is an OpenID" %>
+
+<p>
+  Why OpenID? kljfa dsjflkads jfkl; adjlkfajkld faj dj fajkl fdjkl; ad;fja
+</p>
+
+<br/>
+
+
+<% form_tag(signup_session_url) do %>
+
+  <p>
+    <label for="openid_identifier">OpenID:</label>
+    <%= text_field_tag "openid_identifier" %>
+  </p>
+
+  <%= hidden_field_tag "signup", 1 %>
+
+  <p>
+    <%= submit_tag 'Sign Up', :disable_with => "Signing Up&hellip;" %>
+  </p>
+<% end %>
+
+<br/>
+<br/>
+<strong>Don't have an OpenID?</strong> <%= link_to "Get one from our friends at Vidoop.", "#"%>
