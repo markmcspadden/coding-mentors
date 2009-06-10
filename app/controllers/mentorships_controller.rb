@@ -118,6 +118,11 @@ class MentorshipsController < ApplicationController
   
   # GET /mentorships/1/response
   def respond
+    @mentorship = Mentorship.find(params[:id])
     
+    @sender = @mentorship.sender
+    @receiver = @mentorship.receiver
+    @mentor = @mentorship.mentor
+    @mentee = @mentorship.mentee
   end
 end

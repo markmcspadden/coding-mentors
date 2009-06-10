@@ -1,0 +1,45 @@
+<% if @reciever == @mentor %>
+  <% @content_title = "Would you like to Mentor #{@mentee}?"%>
+<% else %>
+  <% @content_title = "Would you like to be Mentored by #{@mentor}?"%>
+<% end %>
+
+<div>
+  <h2>I'm in!</h2>
+  <% form_for(@mentorship) do |f| %>
+    <%= f.error_messages %>
+
+    <%= f.label :receiver_note, "Let's get Started" %>
+    <br/>
+    <%= f.text_area :receiver_note %>
+    
+    <%= f.hidden_field :accepted?, :value => 1 %>
+    <%= f.hidden_field :rejected?, :value => 0 %>
+
+    <p>
+      <%= f.submit 'Accept' %>
+    </p>
+  <% end %>
+  
+</div>
+
+<hr/>
+
+<div>
+  <h2>I'll pass</h2>
+  
+  <% form_for(@mentorship) do |f| %>
+    <%= f.error_messages %>
+
+    <%= f.label :receiver_note, "See the thing is..." %>
+    <br/>
+    <%= f.text_area :receiver_note %>
+    
+    <%= f.hidden_field :accepted?, :value => 0 %>
+    <%= f.hidden_field :rejected?, :value => 1 %>
+
+    <p>
+      <%= f.submit 'Reject' %>
+    </p>
+  <% end %>  
+</div>
