@@ -1,3 +1,16 @@
+== Installation
+
+Create config/initializers/site_keys_dev.rb OR config/initializers/site_keys_pro.rb based off of config/initializers/site_keys.rb
+Change KEY in your new site_keys_xxx.rb
+ 
+Create config/initializers/recaptcha_dev.rb OR config/initializers/recaptcha_pro.rb based off of config/initializers/recaptcha.rb
+Change KEY in your new recaptcha_xxx.rb to match your public and private key from RECAPTCHA
+
+
+
+
+------
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create 

@@ -3,3 +3,7 @@ tmp/**/*
 doc/api
 doc/app
 db/*.sqlite3
+config/initializers/recaptcha_dev.rb
+config/initializers/site_keys_dev.rb
+config/initializers/recaptcha_pro.rb
+config/initializers/site_keys_pro.rb
