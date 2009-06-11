@@ -7,25 +7,32 @@
   <title><%= controller.controller_name.to_s.titlecase %>: <%= controller.action_name.to_s.titlecase %></title>
   <%= javascript_include_tag :defaults %>
   <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag "layout" %>
   <%= stylesheet_link_tag "forms" %>
   <%= stylesheet_link_tag "autocomplete" %>
 </head>
 <body>
 
-<h1>Coding Mentors or Another Name</h1>
+<div id="header">
+  <h1>Coding Mentors or Another Name</h1>
 
-<div>
-  <%= render "/users/user_bar" %>
+  <div id="user_links">
+    <%= render "/users/user_bar" %>
+  </div>
 </div>
 
-<hr />
+<div id="content">
+  <h1><%= @content_title %></h1>
 
-<h1><%= @content_title %></h1>
+  <p style="color: green"><%= flash[:notice] %></p>
+  <p style="color: red"><%= flash[:error] %></p>
 
-<p style="color: green"><%= flash[:notice] %></p>
-<p style="color: red"><%= flash[:error] %></p>
+  <%= yield %>
+</div>
 
-<%= yield %>
+<div id="footer">
+  footer info here
+</div>
 
 </body>
 </html>
