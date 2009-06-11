@@ -12,6 +12,14 @@
 </head>
 <body>
 
+<% if current_user %>
+  <%= link_to "#{current_user.name}", user_path(current_user)  %> |
+  <%= link_to "logout", logout_path, :method => :delete %>
+<% else %>
+  <%= link_to "login", login_path %> |
+  <%= link_to "signup", signup_path %>
+<% end %>
+
 <h1><%= @content_title %></h1>
 
 <p style="color: green"><%= flash[:notice] %></p>
