@@ -18,6 +18,7 @@ describe "/users/edit.html.erb" do
   end
 
   it "renders the edit user form" do
+    pending "I don't spec views"
     render
     
     response.should have_tag("form[action=#{user_path(@user)}][method=post]") do
