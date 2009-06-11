@@ -8,33 +8,18 @@
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :master_skills %><br />
-    <%= f.text_area :master_skills %>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
   </p>
   <p>
-    <%= f.label :intermediate_skills %><br />
-    <%= f.text_area :intermediate_skills %>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
   </p>
   <p>
-    <%= f.label :newbie_skills %><br />
-    <%= f.text_area :newbie_skills %>
-  </p>
-  <p>
-    <%= f.label :remote_availability %><br />
-    <%= f.text_field :remote_availability %>
-  </p>
-  <p>
-    <%= f.label :local_availability %><br />
-    <%= f.text_field :local_availability %>
-  </p>
-  <p>
-    <%= f.label :available_to_mentor %><br />
-    <%= f.check_box :available_to_mentor %>
-  </p>
-  <p>
-    <%= f.label :available_to_be_mentored %><br />
-    <%= f.check_box :available_to_be_mentored %>
-  </p>
+    <%= f.label :password, "Password (again)" %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>    
+
   <p>
     <%= f.submit 'Create' %>
   </p>

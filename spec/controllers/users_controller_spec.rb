@@ -41,14 +41,18 @@ describe UsersController do
   describe "POST create" do
     
     describe "with valid params" do
+      before(:each) do
+        @user = mock_user(:save => true, :errors => [])
+      end
+      
       it "assigns a newly created user as @user" do
-        User.stub!(:new).with({'these' => 'params'}).and_return(mock_user(:save => true))
+        User.stub!(:new).with({'these' => 'params'}).and_return(@user)
         post :create, :user => {:these => 'params'}
         assigns[:user].should equal(mock_user)
       end
 
       it "redirects to the created user" do
-        User.stub!(:new).and_return(mock_user(:save => true))
+        User.stub!(:new).and_return(@user)
         post :create, :user => {}
         response.should redirect_to(user_url(mock_user))
       end
