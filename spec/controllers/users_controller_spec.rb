@@ -43,6 +43,12 @@ describe UsersController do
     describe "with valid params" do
       before(:each) do
         @user = mock_user(:save => true, :errors => [])
+        User.stub!(:new).and_return(@user)
+      end
+      
+      it "should call the recaptcha validation" do
+        controller.should_receive(:verify_recaptcha).with(@user)
+        post :create, :user => {}
       end
       
       it "assigns a newly created user as @user" do
@@ -52,7 +58,6 @@ describe UsersController do
       end
 
       it "redirects to the created user" do
-        User.stub!(:new).and_return(@user)
         post :create, :user => {}
         response.should redirect_to(user_url(mock_user))
       end

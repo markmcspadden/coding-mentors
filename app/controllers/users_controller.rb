@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    success = @user && @user.save
+    success = @user && verify_recaptcha(@user) && @user.save
 
     if success && @user.errors.empty?
       # Protects against session fixation attacks, causes request forgery
