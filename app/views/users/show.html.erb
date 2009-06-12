@@ -1,7 +1,7 @@
 <% @content_title = @user.name %>
 
 <div class="skinny_left">
-  <%= user_image @user %>
+  <%= user_image @user, :gravatar_link => true %>
   <p>
     <%= link_to 'Edit Profile', edit_user_path(@user) %>
   </p>

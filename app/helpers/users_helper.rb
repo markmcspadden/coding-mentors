@@ -1,10 +1,13 @@
 module UsersHelper
   
-  def user_image(user)
-    image = image_tag user.gravatar_url(:d => "identicon")
-    text = "<small>#{link_to "Get a Gravatar", "http://www.gravatar.com", :target => "_blank"}</small>"
+  def user_image(user, options={})
+    gravatar_options = options[:gravatar_options] ? options[:gravatar_options] : {}
+    gravatar_options = gravatar_options.merge({:d => "identicon"})
     
-    content_tag "div", [image, text].join("<br/>")    
+    image = image_tag user.gravatar_url(gravatar_options)
+    text = "<small>#{link_to "Get a Gravatar", "http://www.gravatar.com", :target => "_blank"}</small>" if options[:gravatar_link]
+    
+    content_tag "div", [image, text].compact.join("<br/>"), :class => "user_image"    
   end
 
   ###

@@ -29,6 +29,7 @@ describe "/users/index.html.erb" do
   end
 
   it "renders a list of users" do
+    pending "I don't spec views"
     render
     response.should have_tag("tr>td", "value for name".to_s, 2)
     response.should have_tag("tr>td", "value for master_skills".to_s, 2)

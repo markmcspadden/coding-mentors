@@ -8,22 +8,37 @@ describe UsersHelper do
     @user = mock_user
   end
 
-  it "should create a user image" do
-    @user.stub!(:gravatar_url).and_return("http://gravatar.com/avatar/f034c5815ab8ce7a20e38e0e9416b142.png?d=identicon&r=PG")
-    html = <<-EOS 
-      <div>
-        <img alt="F034c5815ab8ce7a20e38e0e9416b142" src="http://gravatar.com/avatar/f034c5815ab8ce7a20e38e0e9416b142.png?d=identicon&amp;r=PG" />
-        <br/>
-        <small>
-          <a href="http://www.gravatar.com" target="_blank">Get a Gravatar</a>
-        </small>
-      </div>
-    EOS
+  describe "user images" do
+    it "should create a user image with a gravatar link" do
+      @user.stub!(:gravatar_url).and_return("http://gravatar.com/avatar/f034c5815ab8ce7a20e38e0e9416b142.png?d=identicon&r=PG")
+      html = <<-EOS 
+        <div class="user_image">
+          <img alt="F034c5815ab8ce7a20e38e0e9416b142" src="http://gravatar.com/avatar/f034c5815ab8ce7a20e38e0e9416b142.png?d=identicon&amp;r=PG" />
+          <br/>
+          <small>
+            <a href="http://www.gravatar.com" target="_blank">Get a Gravatar</a>
+          </small>
+        </div>
+      EOS
+
+      html = html.gsub(/\n\s*/,"").strip
+
+      helper.user_image(@user, :gravatar_link => true).should == html
+    end
     
-    html = html.gsub(/\n\s*/,"").strip
-    
-    helper.user_image(@user).should == html
-  end
+    it "should create a user image with a gravatar link and size" do
+      @user.stub!(:gravatar_url).and_return("http://gravatar.com/avatar/f034c5815ab8ce7a20e38e0e9416b142.png?d=identicon&r=PG&s=20")
+      html = <<-EOS 
+        <div class="user_image">
+          <img alt="F034c5815ab8ce7a20e38e0e9416b142" src="http://gravatar.com/avatar/f034c5815ab8ce7a20e38e0e9416b142.png?d=identicon&amp;r=PG&amp;s=20" />
+        </div>
+      EOS
+
+      html = html.gsub(/\n\s*/,"").strip
+
+      helper.user_image(@user, :gravatar_options => {:size => 20}).should == html
+    end    
+  end # user images
 
   describe "restful authentication" do
   
