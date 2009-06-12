@@ -44,7 +44,7 @@ class UserSkillsController < ApplicationController
 
     respond_to do |format|
       if @user_skill.save
-        flash[:notice] = 'UserSkill was successfully created.'
+        # flash[:notice] = 'UserSkill was successfully created.'
         format.html { redirect_to(@user_skill) }
         format.js {
           # render :update do |page|

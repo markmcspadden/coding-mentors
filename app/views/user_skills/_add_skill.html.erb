@@ -1,0 +1,40 @@
+<% unless errors.empty? %>
+<div class="errors">
+  <%= errors %>
+</div>
+<% end %>
+
+<%= link_to_function "Add Skill", "Element.toggle('new_skill')" %>
+
+<div id="new_skill" style="display: none;">
+  <% instance_variable_set "@user_skill", UserSkill.new(:level => 0, :user_id => user.id)%>
+
+  <% form_remote_for(:user_skill, @user_skill, :url => user_skills_path, :update => "skills", :html => {:method => :post, :class => "new_user_skill", :id => "new_user_skill"}) do |f| %>
+    <p>
+      <%= f.label "Skill" %>
+      <%= f.text_field :skill_name %>
+      <br/>
+      <%= f.label "Level" %>
+      <%= f.select :level, Skill.levels %>
+      <%= link_to_function "what?", "Element.toggle('skill_levels_help')"%>
+      <dl id="skill_levels_help" style="display: none;">
+        <% Skill.level_descriptions.to_a.each do |desc| %>
+          <dt><%= desc[0] %></dt>
+          <dd><%= desc[1] %></dd>
+        <% end %>
+        These are based on the Seven Stages of Software Expertise by Meilir Page-Jones and Wayland Systems Inc.
+        <br/>
+        <a href="http://www.waysys.com/ws_content_al_sse.html">Read More about these Stages.</a>
+      </dl>
+      <br/>
+      <%= f.hidden_field :user_id %>
+      <%= f.submit 'Add' %>
+      <div id="autocomplete_skill_name" class="autocomplete"></div>
+    </p>
+  <% end %>
+</div>
+
+<%# OPTIMIZE: This is going to be REALLLLY SLOW at more than 100 Skills %>
+<script type="text/javascript">
+  new Autocompleter.Local($('new_user_skill').getInputs('text', 'user_skill[skill_name]').first(), 'autocomplete_skill_name', [ <%= Skill.all.reject{ |s| user.skills.include?(s) }.collect{ |s| "\"#{escape_javascript(s.name)}\"" }.join(",") %> ], {});
+</script>

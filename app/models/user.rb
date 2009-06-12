@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   ###
 
   # ASSOCIATIONS
-  has_many :user_skills
+  has_many :user_skills, :order => "level DESC"
   has_many :skills, :through => :user_skills
 
   # ADD GRAVATAR SUPPORT

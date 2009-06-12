@@ -6,3 +6,7 @@ div.users div.user {
 div.users div.user div.user_image {
 	float: left;
 }
+
+div.users div.user div.user_content {
+	margin-left: 60px;
+}

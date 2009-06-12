@@ -27,23 +27,10 @@
     <% end %>
   </p>
 
-
   <p>
-    <b>Master skills:</b>  
-    <%= render "/user_skills/skills", :level => 2, :user => @user %>
-
-  </p>
-
-  <p>
-    <b>Intermediate skills:</b>
-    <%= render "/user_skills/skills", :level => 1, :user => @user %>
-  
-  </p>
-
-  <p>
-    <b>Newbie skills:</b>
-    <%= render "/user_skills/skills", :level => 0, :user => @user %>
-  
+    <b>Skills:</b>
+    
+    <%= render "/user_skills/skills", :user => @user %>
   </p>
 
   <% if @user.available_to_mentor || @user.available_to_be_mentored %>

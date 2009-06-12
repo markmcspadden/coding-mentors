@@ -37,13 +37,13 @@ describe Skill do
                                 ["Researcher", 7] ]
     end
     it "should have skill level descriptions" do
-      Skill.level_descriptions.should == [ ["Innocent", "I know it exists"], 
-                                            ["Exposed", "I know I need it"],
-                                            ["Apprentice", "I've tried it with supervision"],
-                                            ["Practitioner", "I've been trained and used it a few times"],
-                                            ["Journeyman", "I've got this down"],
-                                            ["Master", "I know this inside and outside"],
-                                            ["Researcher", "I'm working on improving the skill itself"] ]
+      Skill.level_descriptions.should == { "Innocent" => "I know it exists",
+                                           "Exposed" => "I know I need it",
+                                           "Apprentice" => "I've tried it with supervision",
+                                           "Practitioner" => "I've been trained and used it a few times",
+                                           "Journeyman" => "I've got this down",
+                                           "Master" => "I know this inside and outside",
+                                           "Researcher" => "I'm working on improving the skill itself" }
     end
   end # class methods
 end

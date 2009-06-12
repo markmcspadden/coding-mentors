@@ -20,13 +20,13 @@ class Skill < ActiveRecord::Base
     end
     
     def level_descriptions
-      [ ["Innocent", "I know it exists"], 
-        ["Exposed", "I know I need it"],
-        ["Apprentice", "I've tried it with supervision"],
-        ["Practitioner", "I've been trained and used it a few times"],
-        ["Journeyman", "I've got this down"],
-        ["Master", "I know this inside and outside"],
-        ["Researcher", "I'm working on improving the skill itself"] ]
+      {"Innocent" => "I know it exists", 
+       "Exposed" => "I know I need it",
+       "Apprentice" => "I've tried it with supervision",
+       "Practitioner" => "I've been trained and used it a few times",
+       "Journeyman" => "I've got this down",
+       "Master" => "I know this inside and outside",
+       "Researcher" => "I'm working on improving the skill itself"}
     end
     
   end

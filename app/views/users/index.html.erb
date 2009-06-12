@@ -5,11 +5,13 @@
   <div class="user">
     <h3><%= link_to user.name, user_path(user) %></h3>
     <%= user_image user, :gravatar_options => {:size => 50} %>
-    <%= user.skills.join(",") %>
-    <%=h user.remote_availability %>
-    <%=h user.local_availability %>
-    <%=h user.available_to_mentor %>
-    <%=h user.available_to_be_mentored %>
+    <div class="user_content">
+      <%= user.user_skills.collect{ |us| "#{us.skill} - #{Skill.levels[us.level-1][0]}" }.join("<br/>") %>
+      <%=h user.remote_availability %>
+      <%=h user.local_availability %>
+      <%=h user.available_to_mentor %>
+      <%=h user.available_to_be_mentored %>
+    </div>
   </div>
 <% end %>
 </div>
