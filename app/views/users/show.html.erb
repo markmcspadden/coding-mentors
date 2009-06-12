@@ -1,5 +1,9 @@
 <% @content_title = @user.name %>
 
+<%= user_image @user %>
+
+
+
 <% if @user.available_to_mentor %>
   <p>
     <%= link_to "Ask to be Mentored by #{@user.name}", new_mentorship_path(:mentor_id => @user.id) %>
@@ -45,5 +49,6 @@
 
 <% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p>
+  <%= link_to 'Edit Profile', edit_user_path(@user) %>
+</p>

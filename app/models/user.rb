@@ -53,9 +53,13 @@ class User < ActiveRecord::Base
   ### END RESTFUL AUTHENTICATION
   ###
 
-
+  # ASSOCIATIONS
   has_many :user_skills
   has_many :skills, :through => :user_skills
+
+  # ADD GRAVATAR SUPPORT
+  is_gravtastic
+
 
   def to_s
     "#{name}"

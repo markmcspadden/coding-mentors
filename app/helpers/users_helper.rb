@@ -1,5 +1,16 @@
 module UsersHelper
   
+  def user_image(user)
+    image = image_tag user.gravatar_url(:d => "identicon")
+    text = "<small>#{link_to "Get a Gravatar", "http://www.gravatar.com", :target => "_blank"}</small>"
+    
+    content_tag "div", [image, text].join("<br/>")    
+  end
+
+  ###
+  ### RESTFUL AUTHENTICATION
+  ###
+  
   #
   # Use this to wrap view elements that the user can't access.
   # !! Note: this is an *interface*, not *security* feature !!
@@ -89,5 +100,9 @@ module UsersHelper
       link_to_login_with_IP content_text, options
     end
   end
+  
+  ###
+  ### END RESTFUL AUTHENTICATION
+  ###
 
 end
