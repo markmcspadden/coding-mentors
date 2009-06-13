@@ -58,6 +58,30 @@ class Mentorship < ActiveRecord::Base
       end      
     end
   end
+  
+  # SKILLS
+  
+  # OPTIMIZE: This is just going to pound the mess out of the db
+  # Number of queries is n+1 wher n is the number of skills the mentor has  
+  def matched_skills
+    ms = []
+    
+    mentor.user_skills.select do |us|
+      comparable = UserSkill.find_by_user_id_and_skill_id(mentee.id, us.skill_id)
+      if comparable
+        ms << {:skill => us.skill, :mentor_level => us.level, :mentee_level => comparable.level}
+      end
+    end
+    
+    ms
+  end
+  
+  def suggested_skills
+    suggested_matched_skills = matched_skills.select do |ms|
+                              ms[:mentor_level] >= ms[:mentee_level]
+                            end
+    suggested_matched_skills.collect{ |ms| ms[:skill] }
+  end
 
 end
 

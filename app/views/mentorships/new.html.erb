@@ -1,7 +1,6 @@
-<% if @mentor %>
+<% if @mentee == current_user %>
   <% @content_title = "Interested in being Mentored by #{@mentor.name}?"%>
-<% end %>
-<% if @mentee %>
+<% elsif @mentor == current_user %>
   <% @content_title = "Interested in Mentoring #{@mentee.name}?"%>
 <% end %>
 
@@ -10,10 +9,24 @@
 
   <p>
     <%= f.label @mentor ? "I'd like help with:" : "I'd like to help with:" %><br />
-    <% [@mentor.skills, @mentee.skills].flatten.uniq.each do |skill| %>
-      <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>
+    (skill - mentor level/apprentice level)
+    <br/>
+    <% @matched_skills.each do |matched_skill| %>
+      <% skill = matched_skill[:skill] %>
+      <% mentor_level = matched_skill[:mentor_level] %>
+      <% mentee_level = matched_skill[:mentee_level] %>
+      <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %>
+      - <%= "#{mentor_level}/#{mentee_level}"%>
+      <br/>
     <% end %>
-    <%#= text_area_tag "skills" %>
+    
+  </p>
+  
+  <p>
+    All skills either you or <%= @receiver %> have<br/>
+    <% @other_skills.each do |skill| %>
+      <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>    
+    <% end %>
   </p>
   
   <p>

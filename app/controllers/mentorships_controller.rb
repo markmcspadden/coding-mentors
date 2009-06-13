@@ -48,6 +48,9 @@ class MentorshipsController < ApplicationController
                                   :receiver => @receiver )
     
 
+    @matched_skills = @mentorship.matched_skills
+    @matched_skills_skills = @matched_skills.collect{ |ms| ms[:skill] }
+    @other_skills = [@mentor.skills, @mentee.skills].flatten.uniq.reject{ |s| @matched_skills_skills.include?(s) }
 
     respond_to do |format|
       format.html # new.html.erb

@@ -142,4 +142,52 @@ describe Mentorship do
     end
     
   end # associations
+  
+  describe "skills" do
+    before(:each) do
+      @s1 = mock_model(Skill, :name => "Ruby")
+      @s2 = mock_model(Skill, :name => "Java")
+      @s3 = mock_model(Skill, :name => ".NET")
+      @s4 = mock_model(Skill, :name => "PHP" )
+      
+      @mentor = mock_model(User)
+      @mentee = mock_model(User)
+      
+      @mentorship.stub!(:mentor).and_return(@mentor)
+      @mentorship.stub!(:mentee).and_return(@mentee)
+
+      @us1 = mock_model(UserSkill, :skill => @s1, :skill_id => @s1.id, :level => 6)
+      @us2 = mock_model(UserSkill, :skill => @s2, :skill_id => @s2.id, :level => 3)
+      @us3 = mock_model(UserSkill, :skill => @s3, :skill_id => @s3.id, :level => 3)
+      @mentor.stub!(:user_skills).and_return([@us1, @us2, @us3])
+      
+      @us4 = mock_model(UserSkill, :skill => @s1, :skill_id => @s1.id, :level => 1)
+      @us5 = mock_model(UserSkill, :skill => @s2, :skill_id => @s2.id, :level => 3)
+      @us6 = mock_model(UserSkill, :skill => @s3, :skill_id => @s3.id, :level => 5)
+      @mentee.stub!(:user_skills).and_return([@us4, @us5, @us6])
+    end
+    
+    describe "matched skills" do
+      it "should get the matched skills" do
+        @mentee.user_skills.each do |us|
+          UserSkill.should_receive(:find_by_user_id_and_skill_id).with(@mentee.id, us.skill_id).and_return(us)
+        end
+        
+        @mentorship.matched_skills.should == [{:skill => @s1, :mentor_level => 6, :mentee_level => 1},
+                                               {:skill => @s2, :mentor_level => 3, :mentee_level => 3},
+                                               {:skill => @s3, :mentor_level => 3, :mentee_level => 5},]
+      end
+    end # matched user skills
+    
+    describe "suggested skills" do
+      it "should suggest skills where the mentor is better than/equal to the mentee" do
+        @mentee.user_skills.each do |us|
+          UserSkill.should_receive(:find_by_user_id_and_skill_id).with(@mentee.id, us.skill_id).and_return(us)
+        end
+        
+        @mentorship.suggested_skills.should == [@s1, @s2]
+      end
+    end # suggesting skills
+
+  end # skills
 end

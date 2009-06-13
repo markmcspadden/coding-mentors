@@ -24,10 +24,13 @@ describe MentorshipsController do
 
   describe "GET new" do
     before(:each) do
-      @current_user = mock_model(User)
+      @mentorship = mock_model(Mentorship, :mentor_id= => true, :mentee_id= => true, :sender_id= => true, :receiver_id= => true, :matched_skills => [])
+      
+      
+      @current_user = mock_model(User, :skills => [], :user_skills => [])
       controller.stub!(:current_user).and_return(@current_user)
       
-      @mentor = mock_model(User)
+      @mentor = mock_model(User, :skills => [], :user_skills => [])
       User.stub!(:find).with("1").and_return(@mentor)
     end
     
@@ -38,11 +41,10 @@ describe MentorshipsController do
     end
     
     it "assigns a new mentorship as @mentorship" do      
-      @mentorship = mock_mentorship(:mentor_id= => true, :mentee_id= => true, :sender_id= => true, :receiver_id= => true)
       Mentorship.stub!(:new).and_return(@mentorship)
       
       do_get
-      assigns[:mentorship].should equal(mock_mentorship)
+      assigns[:mentorship].should equal(@mentorship)
     end
     it "should redirect to '/mentorships' if no 'mentee_id' OR 'mentor_id' param exists" do
       get :new
@@ -65,14 +67,14 @@ describe MentorshipsController do
         assigns[:mentorship].receiver_id.should == @mentor.id
       end      
       it "should set the receiver as the mentor if the current user is the mentee" do
-        @mentor = mock_model(User, :id => 32)
+        @mentor = mock_model(User, :id => 32, :skills => [], :user_skills => [])
         User.stub!(:find).with("32").and_return(@mentor)
         
         do_get({:mentor_id => @mentor.id})
         assigns[:receiver].should == @mentor
       end
       it "should set the receiver as the mentee if the current user is the mentor" do
-        @mentee = mock_model(User, :id => 32)
+        @mentee = mock_model(User, :id => 32, :skills => [], :user_skills => [])
         User.stub!(:find).with("32").and_return(@mentee)
         
         do_get({:mentee_id => @mentee.id})
@@ -83,7 +85,7 @@ describe MentorshipsController do
     
     describe "with a mentor_id" do
       before(:each) do        
-        @user = mock_model(User)
+        @user = mock_model(User, :skills => [], :user_skills => [])
         User.stub!(:find).and_return(@user)
       end
       def do_get
@@ -109,7 +111,7 @@ describe MentorshipsController do
     end # with a mentor_id
     describe "with a mentee_id" do
       before(:each) do
-        @user = mock_model(User)
+        @user = mock_model(User, :skills => [], :user_skills => [])
         User.stub!(:find).and_return(@user)
       end
       def do_get
