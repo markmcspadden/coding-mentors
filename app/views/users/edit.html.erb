@@ -21,11 +21,15 @@
   </p>  
   <p>
     <%= f.label :remote_availability %><br />
-    <%= f.text_field :remote_availability %>
+    <%= f.select :remote_availability_hours, User.availability_hours %>
+    hours per
+    <%= f.select :remote_availability_increment, User.availability_increments %>
   </p>
   <p>
     <%= f.label :local_availability %><br />
-    <%= f.text_field :local_availability %>
+    <%= f.select :local_availability_hours, User.availability_hours %>
+    hours per 
+    <%= f.select :local_availability_increment, User.availability_increments %>
   </p>
   <p>
     <%= f.label :available_to_mentor %><br />

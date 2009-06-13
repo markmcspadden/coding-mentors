@@ -316,6 +316,35 @@ describe User do
       end
     
   end # restful authentication
+  
+  describe "availability" do
+    it "should combine hours and increments for remote_availability" do
+      @user.remote_availability_hours = "2"
+      @user.remote_availability_increment = "week"
+      @user.remote_availability.should == "2 hours per week"
+    end
+    it "should get the hours and increment from the remote_availbility" do
+      @user.remote_availability = "3 hours per month"
+      @user.remote_availability_hours.should == 3
+      @user.remote_availability_increment.should == "month"
+    end
+    it "should combine hours and increments for local_availability" do
+      @user.local_availability_hours = "2"
+      @user.local_availability_increment = "week"
+      @user.local_availability.should == "2 hours per week"
+    end
+    it "should get the hours and increment from the local_availbility" do
+      @user.local_availability = "3 hours per month"
+      @user.local_availability_hours.should == 3
+      @user.local_availability_increment.should == "month"
+    end    
+    it "should have availability hours" do
+      User.availability_hours.should == [1,2,3,4,5,6,7,8,9,10]
+    end
+    it "should have availability increments" do
+      User.availability_increments.should == ["day", "week", "month"]
+    end
+  end
 
 
 end

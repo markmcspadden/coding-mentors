@@ -28,7 +28,8 @@ class User < ActiveRecord::Base
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation,
-                  :remote_availability, :local_availability, 
+                  :remote_availability, :remote_availability_hours, :remote_availability_increment,
+                  :local_availability, :local_availability_hours, :local_availability_increment,
                   :available_to_mentor, :available_to_be_mentored
   
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -72,6 +73,54 @@ class User < ActiveRecord::Base
   end
   def skills_by_level(level)
     user_skills_by_level(level).collect{ |us| us.skill }
+  end
+  
+  # TODO: MetaProgram these
+  # Remote availability
+  def remote_availability_hours
+    @remote_availability_hours ||= remote_availability.split(" hours per ").first.to_i
+  end
+  def remote_availability_increment
+    @remote_availability_increment ||= remote_availability.split(" hours per ").last
+  end  
+  def remote_availability_hours=(new_value)
+    @remote_availability_hours = new_value
+    self.remote_availability = "#{remote_availability_hours} hours per #{remote_availability_increment}"
+    @remote_availability_hours
+  end
+  def remote_availability_increment=(new_value)
+    @remote_availability_increment = new_value
+    self.remote_availability = "#{remote_availability_hours} hours per #{remote_availability_increment}"
+    @remote_availability_increment
+  end  
+  
+  # Local availability
+  def local_availability_hours
+    @local_availability_hours ||= local_availability.split(" hours per ").first.to_i
+  end
+  def local_availability_increment
+    @local_availability_increment ||= local_availability.split(" hours per ").last
+  end  
+  def local_availability_hours=(new_value)
+    @local_availability_hours = new_value
+    self.local_availability = "#{local_availability_hours} hours per #{local_availability_increment}"
+    @local_availability_hours
+  end
+  def local_availability_increment=(new_value)
+    @local_availability_increment = new_value
+    self.local_availability = "#{local_availability_hours} hours per #{local_availability_increment}"
+    @local_availability_increment
+  end  
+  
+  class << self
+    
+    def availability_hours
+      (1..10).to_a
+    end
+    def availability_increments
+      ["day", "week", "month"]
+    end
+    
   end
 
 end
