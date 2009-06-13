@@ -318,33 +318,59 @@ describe User do
   end # restful authentication
   
   describe "availability" do
-    it "should combine hours and increments for remote_availability" do
-      @user.remote_availability_hours = "2"
-      @user.remote_availability_increment = "week"
-      @user.remote_availability.should == "2 hours per week"
-    end
-    it "should get the hours and increment from the remote_availbility" do
-      @user.remote_availability = "3 hours per month"
-      @user.remote_availability_hours.should == 3
-      @user.remote_availability_increment.should == "month"
-    end
-    it "should combine hours and increments for local_availability" do
-      @user.local_availability_hours = "2"
-      @user.local_availability_increment = "week"
-      @user.local_availability.should == "2 hours per week"
-    end
-    it "should get the hours and increment from the local_availbility" do
-      @user.local_availability = "3 hours per month"
-      @user.local_availability_hours.should == 3
-      @user.local_availability_increment.should == "month"
-    end    
+    describe "remote" do
+      it "should combine hours and increments for remote_availability" do
+        @user.remote_availability_hours = "2"
+        @user.remote_availability_increment = "week"
+        @user.remote_availability.should == "2 hours per week"
+      end
+      it "should give a nil remote_availability if remote_availability_hours are 0" do
+        @user.remote_availability_hours = 0
+        @user.remote_availability_increment = "week"
+        @user.remote_availability.should == nil
+      end    
+      it "should get the hours and increment from the remote_availbility" do
+        @user.remote_availability = "3 hours per month"
+        @user.remote_availability_hours.should == 3
+        @user.remote_availability_increment.should == "month"
+      end
+      it "should get the hours and increment from the remote_availbility even if remote_avaiability is blank" do
+        @user.remote_availability = nil
+        @user.remote_availability_hours.should == 0
+        @user.remote_availability_increment.should == nil
+      end
+    end # remote
+
+    describe "local" do
+      it "should combine hours and increments for local_availability" do
+        @user.local_availability_hours = "2"
+        @user.local_availability_increment = "week"
+        @user.local_availability.should == "2 hours per week"
+      end
+      it "should give a nil local_availability if local_availability_hours are 0" do
+        @user.local_availability_hours = 0
+        @user.local_availability_increment = "week"
+        @user.local_availability.should == nil
+      end      
+      it "should get the hours and increment from the local_availbility" do
+        @user.local_availability = "3 hours per month"
+        @user.local_availability_hours.should == 3
+        @user.local_availability_increment.should == "month"
+      end
+      it "should get the hours and increment from the local_availbility even if local_avaiability is blank" do
+        @user.local_availability = nil
+        @user.local_availability_hours.should == 0
+        @user.local_availability_increment.should == nil
+      end
+    end # local
+
     it "should have availability hours" do
-      User.availability_hours.should == [1,2,3,4,5,6,7,8,9,10]
+      User.availability_hours.should == [0,1,2,3,4,5,6,7,8,9,10]
     end
     it "should have availability increments" do
       User.availability_increments.should == ["day", "week", "month"]
     end
-  end
+  end # availability
 
 
 end

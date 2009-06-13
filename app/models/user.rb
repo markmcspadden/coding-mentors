@@ -75,47 +75,76 @@ class User < ActiveRecord::Base
     user_skills_by_level(level).collect{ |us| us.skill }
   end
   
-  # TODO: MetaProgram these
+  # Availability is text based at this time
+  # I figure it will morph and change quite a bit at the beginning
+  # However, I still wanted user dropdowns to give a good jumping off point
+  # to choose your availability
+  # So, I created these methods that morph input from 2 drops downs
+  # (xxx_availability_hours and xxx_availability_increment) in the text field
+  # And we need them for both remote and local...a great opportunity to Meta Program
+  # Whenever these become more stable, let's do just that.
+  
+  # TODO: Convert to metaprogrammed methods
   # Remote availability
   def remote_availability_hours
-    @remote_availability_hours ||= remote_availability.split(" hours per ").first.to_i
+    @remote_availability_hours ||= remote_availability.to_s.split(" hours per ").first.to_i
   end
   def remote_availability_increment
-    @remote_availability_increment ||= remote_availability.split(" hours per ").last
+    @remote_availability_increment ||= remote_availability.to_s.split(" hours per ").last
   end  
   def remote_availability_hours=(new_value)
     @remote_availability_hours = new_value
-    self.remote_availability = "#{remote_availability_hours} hours per #{remote_availability_increment}"
+    self.remote_availability = set_remote_availability
     @remote_availability_hours
   end
   def remote_availability_increment=(new_value)
     @remote_availability_increment = new_value
-    self.remote_availability = "#{remote_availability_hours} hours per #{remote_availability_increment}"
+    self.remote_availability = set_remote_availability
     @remote_availability_increment
-  end  
+  end
+  def derived_remote_availability
+    set_remote_availability
+  end 
+  def set_remote_availability
+    if remote_availability_hours == 0
+      nil
+    else
+      "#{remote_availability_hours} hours per #{remote_availability_increment}"
+    end
+  end 
   
   # Local availability
   def local_availability_hours
-    @local_availability_hours ||= local_availability.split(" hours per ").first.to_i
+    @local_availability_hours ||= local_availability.to_s.split(" hours per ").first.to_i
   end
   def local_availability_increment
-    @local_availability_increment ||= local_availability.split(" hours per ").last
+    @local_availability_increment ||= local_availability.to_s.split(" hours per ").last
   end  
   def local_availability_hours=(new_value)
     @local_availability_hours = new_value
-    self.local_availability = "#{local_availability_hours} hours per #{local_availability_increment}"
+    self.local_availability = set_local_availability
     @local_availability_hours
   end
   def local_availability_increment=(new_value)
     @local_availability_increment = new_value
-    self.local_availability = "#{local_availability_hours} hours per #{local_availability_increment}"
+    self.local_availability = set_local_availability
     @local_availability_increment
-  end  
+  end 
+  def derived_local_availability
+    set_local_availability
+  end
+  def set_local_availability
+    if local_availability_hours == 0
+      nil
+    else
+      "#{local_availability_hours} hours per #{local_availability_increment}"
+    end
+  end   
   
   class << self
     
     def availability_hours
-      (1..10).to_a
+      (0..10).to_a
     end
     def availability_increments
       ["day", "week", "month"]
