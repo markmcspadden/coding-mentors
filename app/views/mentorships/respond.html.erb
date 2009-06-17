@@ -4,8 +4,26 @@
   <% @content_title = "Would you like to be Mentored by #{@mentor}?"%>
 <% end %>
 
-<div>
-  <h2>I'm in!</h2>
+<script>
+  function toggleResponse(yes_or_no) {
+    var mentorship_yes = $('mentorship_yes');
+    var mentorship_no = $('mentorship_no');
+    
+    if(yes_or_no) {
+      mentorship_no.hide();
+      mentorship_yes.show()
+    }
+    else {
+      mentorship_yes.hide();
+      mentorship_no.show();
+    }
+  }
+</script>
+
+<%= link_to_function "I'm in!", "toggleResponse(true)" %> | 
+<%= link_to_function "I'll pass", "toggleResponse(false)" %>
+
+<div id="mentorship_yes">
   <% form_for(@mentorship) do |f| %>
     <%= f.error_messages %>
 
@@ -23,11 +41,7 @@
   
 </div>
 
-<hr/>
-
-<div>
-  <h2>I'll pass</h2>
-  
+<div id="mentorship_no" style="display: none;">
   <% form_for(@mentorship) do |f| %>
     <%= f.error_messages %>
 
