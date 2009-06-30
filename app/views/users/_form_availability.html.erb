@@ -1,0 +1,20 @@
+<p>
+  <%= f.label :available_to_mentor, "I'd like to mentor someone" %><br />
+  <%= f.check_box :available_to_mentor %>
+</p>
+<p>
+  <%= f.label :available_to_be_mentored, "I'd like to apprentice under someone" %><br />
+  <%= f.check_box :available_to_be_mentored %>
+</p>
+<p>
+  <%= f.label :remote_availability %><br />
+  <%= f.select :remote_availability_hours, User.availability_hours %>
+  hours per
+  <%= f.select :remote_availability_increment, User.availability_increments %>
+</p>
+<p>
+  <%= f.label :local_availability %><br />
+  <%= f.select :local_availability_hours, User.availability_hours %>
+  hours per 
+  <%= f.select :local_availability_increment, User.availability_increments %>
+</p>

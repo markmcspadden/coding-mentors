@@ -9,41 +9,50 @@
 
 <div class="wide_right">
 
-  <p>
-    <b>Mentor Status:</b> 
-    <% if @user.available_to_mentor %>
-      <%= link_to "Ask to be Mentored by #{@user.name}", new_mentorship_path(:mentor_id => @user.id) %>
-    <% else %>
-      Not available to serve as a Mentor
-    <% end %>
-  </p>
-
-  <p>
-    <b>Apprentice Status:</b>
-    <% if @user.available_to_be_mentored %>
-      <%= link_to "Offer to Mentor #{@user.name}", new_mentorship_path(:mentee_id => @user.id) %>
-    <% else %>
-      Not available to be Mentored at this time
-    <% end %>
-  </p>
-
-  <p>
-    <b>Skills:</b>
-    
+  <div class="user_dets">
+    <h3>
+      Skills
+      <%= link_to_function "add", "Element.toggle('new_skill')", :class => "action" %>
+    </h3>
     <%= render "/user_skills/skills", :user => @user %>
-  </p>
+  </div>
 
-  <% if @user.available_to_mentor || @user.available_to_be_mentored %>
+  <div class="user_dets">
+    <h3>
+      Availability
+      <%= link_to "edit", edit_availability_user_path(@user), :class => "action" %>
+    </h3>
 
-  <p>
-    <b>Remote availability:</b>
-    <%=h @user.derived_remote_availability %>
-  </p>
 
-  <p>
-    <b>Local availability:</b>
-    <%=h @user.derived_local_availability %>
-  </p>
+    <p>
+      <% if @user.available_to_mentor %>
+        <%= link_to "Become #{@user.name}'s Apprentice", new_mentorship_path(:mentor_id => @user.id) %>
+      <% else %>
+        
+      <% end %>
+    </p>
 
-  <% end %>
+    <p>
+      <% if @user.available_to_be_mentored %>
+        <%= link_to "Become #{@user.name}'s Mentor", new_mentorship_path(:mentee_id => @user.id) %>
+      <% else %>
+        
+      <% end %>
+    </p>
+    
+    <% if @user.available_to_mentor || @user.available_to_be_mentored %>
+
+    <p>
+      <b>Remote availability:</b>
+      <%=h @user.derived_remote_availability %>
+    </p>
+
+    <p>
+      <b>Local availability:</b>
+      <%=h @user.derived_local_availability %>
+    </p>
+
+    <% end %>    
+  </div>
+
 </div>

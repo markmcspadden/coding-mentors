@@ -1,13 +1,15 @@
 <% errors = errors ? errors : [] %>
 
 <div id="skills">
+  <%= render "/user_skills/add_skill", :user => user, :errors => errors %>
+  
   <% # TODO: Remove skill %>
   <% # TODO: Move skill?? %>
   <% user.user_skills.each do |user_skill| %>
     <%= user_skill.skill %> - <%= Skill.levels[user_skill.level-1][0] %><br/>
   <% end %>
 
-  <br/>
-  <%= render "/user_skills/add_skill", :user => user, :errors => errors %>
+
+
 
 </div>

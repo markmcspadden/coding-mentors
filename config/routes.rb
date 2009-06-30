@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :mentorships, :member => {:respond => :get}
 
-  map.resources :users
+  map.resources :users, :member => {:edit_availability => :get}
 
   # SESSION ROUTES
   # ORDER IS IMPORTANT

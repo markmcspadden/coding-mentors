@@ -1,0 +1,11 @@
+<% @content_title = "Edit Availability" %>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %> 
+  
+  <%= render "form_availability", :f => f %>
+  
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

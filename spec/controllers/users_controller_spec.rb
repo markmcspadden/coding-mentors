@@ -37,6 +37,14 @@ describe UsersController do
       assigns[:user].should equal(mock_user)
     end
   end
+  
+  describe "GET edit_availability" do
+    it "should assign the requested user as @user" do
+      User.stub!(:find).with("37").and_return(mock_user)
+      get :edit, :id => "37"
+      assigns[:user].should equal(mock_user)      
+    end
+  end
 
   describe "POST create" do
     

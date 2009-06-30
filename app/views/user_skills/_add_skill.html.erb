@@ -4,7 +4,7 @@
 </div>
 <% end %>
 
-<%= link_to_function "Add Skill", "Element.toggle('new_skill')" %>
+<%#= link_to_function "Add Skill", "Element.toggle('new_skill')" %>
 
 <div id="new_skill" style="display: none;">
   <% instance_variable_set "@user_skill", UserSkill.new(:level => 0, :user_id => user.id)%>
@@ -26,12 +26,13 @@
         <br/>
         <a href="http://www.waysys.com/ws_content_al_sse.html">Read More about these Stages.</a>
       </dl>
-      <br/>
       <%= f.hidden_field :user_id %>
       <%= f.submit 'Add' %>
       <div id="autocomplete_skill_name" class="autocomplete"></div>
     </p>
   <% end %>
+  
+  <br/>
 </div>
 
 <%# OPTIMIZE: This is going to be REALLLLY SLOW at more than 100 Skills %>

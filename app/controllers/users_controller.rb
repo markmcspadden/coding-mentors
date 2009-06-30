@@ -37,6 +37,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  # GET /users/1/edit_availability
+  def edit_availability
+    @user = User.find(params[:id])
+  end
+
   # POST /users
   # POST /users.xml
   # DEFAULT
@@ -82,7 +87,6 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    puts params[:user]
     @user = User.find(params[:id])
 
     respond_to do |format|

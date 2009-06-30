@@ -10,3 +10,17 @@ div.users div.user div.user_image {
 div.users div.user div.user_content {
 	margin-left: 60px;
 }
+
+div.user_dets {
+	margin-bottom: 40px;
+}
+
+div.user_dets h3 {
+
+}
+
+div.user_dets h3 a.action {
+	margin-left: 1em;
+	font-weight: normal;
+	font-size: 0.8em;
+}

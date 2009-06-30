@@ -18,13 +18,17 @@ describe UsersController do
       route_for(:controller => "users", :action => "edit", :id => "1").should == "/users/1/edit"
     end
 
-  it "maps #create" do
-    route_for(:controller => "users", :action => "create").should == {:path => "/users", :method => :post}
-  end
+    it "maps #edit_availability" do
+      route_for(:controller => "users", :action => "edit_availability", :id => "1").should == "/users/1/edit_availability"
+    end
 
-  it "maps #update" do
-    route_for(:controller => "users", :action => "update", :id => "1").should == {:path =>"/users/1", :method => :put}
-  end
+    it "maps #create" do
+      route_for(:controller => "users", :action => "create").should == {:path => "/users", :method => :post}
+    end
+
+    it "maps #update" do
+      route_for(:controller => "users", :action => "update", :id => "1").should == {:path =>"/users/1", :method => :put}
+    end
   
     it "maps #destroy" do
       route_for(:controller => "users", :action => "destroy", :id => "1").should == {:path =>"/users/1", :method => :delete}
@@ -51,6 +55,10 @@ describe UsersController do
     it "generates params for #edit" do
       params_from(:get, "/users/1/edit").should == {:controller => "users", :action => "edit", :id => "1"}
     end
+  
+    it "generates params for #edit_availability" do
+      params_from(:get, "/users/1/edit_availability").should == {:controller => "users", :action => "edit_availability", :id => "1"}
+    end  
   
     it "generates params for #update" do
       params_from(:put, "/users/1").should == {:controller => "users", :action => "update", :id => "1"}
