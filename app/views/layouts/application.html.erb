@@ -8,6 +8,7 @@
   <%= javascript_include_tag :defaults %>
   <%= stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag "layout" %>
+  <%= stylesheet_link_tag "content" %>
   <%= stylesheet_link_tag "forms" %>
   <%= stylesheet_link_tag "autocomplete" %>
   <%= stylesheet_link_tag "users" %>
@@ -15,7 +16,7 @@
 <body>
 
 <div id="header">
-  <h1>Coding Mentors or Another Name</h1>
+  <h1>Coding Mentors</h1>
 
   <div id="user_links">
     <%= render "/users/user_bar" %>
@@ -38,7 +39,13 @@
 </div>
 
 <div id="footer">
-  footer info here
+  <div id="tagline">
+    We are Coding Mentors. You should be too. ;)
+  </div>
+
+  <%= link_to "about", "#" %> |
+  <%= link_to "blog", "#" %> | 
+  <%= link_to "support", "#" %>
 </div>
 
 </body>
