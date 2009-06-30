@@ -7,10 +7,14 @@
     <%= user_image user, :gravatar_options => {:size => 50} %>
     <div class="user_content">
       <%= user.user_skills.collect{ |us| "#{us.skill} - #{Skill.levels[us.level-1][0]}" }.join("<br/>") %>
-      <%=h user.remote_availability %>
-      <%=h user.local_availability %>
-      <%=h user.available_to_mentor %>
-      <%=h user.available_to_be_mentored %>
+      <br/>
+      Remote availability: <%=h user.remote_availability %>
+      <br/>
+      Local availability: <%=h user.local_availability %>
+      <br/>
+      Available to Mentor: <%=h user.available_to_mentor %>
+      <br/>
+      Available to be Mentored: <%=h user.available_to_be_mentored %>
     </div>
   </div>
 <% end %>
