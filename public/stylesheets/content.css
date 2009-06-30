@@ -1,0 +1,28 @@
+/* Skiny left and Wide right */
+div#content div.skinny_left {
+  float: left;
+  width: 100px;
+}
+div#content div.wide_right {
+  border-left: 1px solid #333;
+  margin-left: 100px;
+  padding: 0 0 0 10px;
+}
+
+/* Two even columns */
+div#content div.two_columns {
+	margin: 0;
+	padding: 0;
+}
+div#content div.two_columns h2 {
+	margin: 0;
+}
+
+div#content div.two_columns div.left_column {
+	float: left;
+	width: 48%;
+}
+
+div#content div.two_columns div.right_column {
+  margin-left: 49%;
+}
