@@ -24,3 +24,9 @@ div.user_dets h3 a.action {
 	font-weight: normal;
 	font-size: 0.8em;
 }
+
+div.user_dets form {
+	border: 2px solid #888;
+	margin: 10px 0;
+	padding: 5px;
+}

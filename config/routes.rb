@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :user_skills
+  map.resources :user_skills, :member => {:edit_inline => :get}
 
   map.resources :mentorships, :member => {:respond => :get}
 

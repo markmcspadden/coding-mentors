@@ -1,24 +1,26 @@
 <% errors = errors ? errors : [] %>
 
+<% user_skills_array = Skill.all.reject{ |s| user.skills.include?(s) }.collect{ |s| "\"#{escape_javascript(s.name)}\"" }.join(",") %>
+
 <div id="skills">
   <%= render "/user_skills/add_skill", :user => user, :errors => errors %>
   
-  <% # TODO: Remove skill %>
-  <% # TODO: Move skill?? %>
   <% user.user_skills.each do |user_skill| %>
-    <span id="<%= dom_id user_skill %>">
+    <div id="<%= dom_id user_skill %>">
       <%= user_skill.skill %> - <%= Skill.levels[user_skill.level-1][0] %>
+      <%= link_to_remote "[edit]",  :url => edit_inline_user_skill_path(user_skill),
+                                    :method => :get,
+                                    :loading => "Element.update('#{dom_id user_skill}', 'Editing...');",
+                                    :failure => "Element.update('#{dom_id user_skill}', 'Unable to be edited :/');",
+                                    :success => "Element.update('#{dom_id user_skill}', request.responseText); resetAvailableSkills([ #{user_skills_array} ]); attachAutoComplete(#{user_skill.id})" %>
       <%= link_to_remote "[x]", :url => user_skill_path(user_skill),
                                 :method => :delete,
                                 :loading => "Element.update('#{dom_id user_skill}', 'Deleting...');",
                                 :failure => "Element.update('#{dom_id user_skill}', 'Skill unable to be removed. :/');",
                                 :success => "Element.update('#{dom_id user_skill}', 'Deleted'); $('#{dom_id user_skill}').fade()"%>
-    </span>
-
-    <br/>
+    </div>
   <% end %>
-
-
-
-
 </div>
+
+
+

@@ -1,3 +1,8 @@
+<script>
+  var availableSkills = [<%= Skill.all.reject{ |s| @user.skills.include?(s) }.collect{ |s| "\"#{escape_javascript(s.name)}\"" }.join(",") %>];
+</script>
+<script type="text/javascript" src="/javascripts/skills.js"></script>
+
 <% @content_title = @user.name %>
 
 <div class="skinny_left">
@@ -14,7 +19,12 @@
       Skills
       <%= link_to_function "add", "Element.toggle('new_skill')", :class => "action" %>
     </h3>
-    <%= render "/user_skills/skills", :user => @user %>
+    <div id="skills_container">
+      <script>
+
+      </script>
+      <%= render "/user_skills/skills", :user => @user %>
+    </div>
   </div>
 
   <div class="user_dets">

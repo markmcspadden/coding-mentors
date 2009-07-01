@@ -36,6 +36,11 @@ class UserSkillsController < ApplicationController
   def edit
     @user_skill = UserSkill.find(params[:id])
   end
+  def edit_inline
+    @user_skill = UserSkill.find(params[:id])
+    render :layout => false
+  end  
+  
 
   # POST /user_skills
   # POST /user_skills.xml
@@ -47,9 +52,6 @@ class UserSkillsController < ApplicationController
         # flash[:notice] = 'UserSkill was successfully created.'
         format.html { redirect_to(@user_skill) }
         format.js {
-          # render :update do |page|
-          #   page.alert "Skill was added successfully"
-          # end
           render :partial => "skills", :locals => {:level => @user_skill.level, :user => @user_skill.user}
         }
         format.xml  { render :xml => @user_skill, :status => :created, :location => @user_skill }
@@ -70,11 +72,17 @@ class UserSkillsController < ApplicationController
 
     respond_to do |format|
       if @user_skill.update_attributes(params[:user_skill])
-        flash[:notice] = 'UserSkill was successfully updated.'
+        # flash[:notice] = 'UserSkill was successfully updated.'
         format.html { redirect_to(@user_skill) }
+        format.js {
+          render :partial => "skills", :locals => {:level => @user_skill.level, :user => @user_skill.user}
+        }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.js {
+          render :partial => "skills", :locals => {:level => @user_skill.level, :user => @user_skill.user, :errors => @user_skill.errors.full_messages}
+        }
         format.xml  { render :xml => @user_skill.errors, :status => :unprocessable_entity }
       end
     end
