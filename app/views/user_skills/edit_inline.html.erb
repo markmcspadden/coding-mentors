@@ -9,5 +9,6 @@
   <%= render "form", :f => f %>
   <p>
     <%= f.submit 'Update' %>
+    <%= link_to_function 'Cancel', "Element.hide('#{dom_id @user_skill}_edit_container'); Element.show('#{dom_id @user_skill}');" %>
   </p>
 <% end %>
