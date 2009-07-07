@@ -6,7 +6,7 @@
     <h3><%= link_to user.name, user_path(user) %></h3>
     <%= user_image user, :gravatar_options => {:size => 50} %>
     <div class="user_content">
-      <%= user.user_skills.collect{ |us| "#{us.skill} - #{Skill.levels[us.level-1][0]}" }.join("<br/>") %>
+      <%= user.user_skills.collect{ |us| display_user_skill us }.join("<br/>") %>
       <br/>
       Remote availability: <%=h user.remote_availability %>
       <br/>

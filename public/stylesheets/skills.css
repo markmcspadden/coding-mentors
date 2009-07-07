@@ -1,0 +1,9 @@
+img.user_skill_image {
+	width: 10px;
+	height: 20px;
+	vertical-align: bottom;
+}
+
+span.user_skill_images {
+	margin-right: 10px;
+}

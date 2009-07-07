@@ -12,4 +12,29 @@ module UserSkillsHelper
     
     js
   end
+  
+  def display_user_skill(user_skill)
+    content_tag(:span, user_skill_image(user_skill), :class => "user_skill_images") +
+    user_skill.skill.name
+  end
+  
+  def user_skill_image(user_skill)
+    total = 7
+    on = user_skill.level
+    off = total - on
+    
+    images = ""
+    
+    on.times { images << on_image }
+    off.times { images << off_image }
+    
+    images
+  end
+  
+  def on_image
+    image_tag "pill_on.png", :alt => "On", :class => "user_skill_image"
+  end
+  def off_image
+    image_tag "pill_off.png", :alt => "Off", :class => "user_skill_image"
+  end
 end

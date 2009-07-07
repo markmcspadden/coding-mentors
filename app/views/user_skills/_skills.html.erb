@@ -7,7 +7,8 @@
   
   <% user.user_skills.each do |user_skill| %>
     <div id="<%= dom_id user_skill %>">
-      <%= user_skill.skill %> - <%= Skill.levels[user_skill.level-1][0] %>
+      <%= display_user_skill user_skill %>
+      
       <%= link_to_remote "[edit]",  :url => edit_inline_user_skill_path(user_skill),
                                     :method => :get,
                                     :loading => "Element.update('#{dom_id user_skill}_edit_container', 'Editing...'); Element.hide('#{dom_id user_skill}'); Element.show('#{dom_id user_skill}_edit_container');",
