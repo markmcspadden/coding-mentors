@@ -27,6 +27,11 @@ describe UserSkillsHelper do
       helper.should_receive(:off_image).exactly(1).times.and_return("OFF IMAGE")
       helper.user_skill_image(@user_skill)
     end
+    it "should accept a level as well as a user_skill object" do
+      helper.should_receive(:on_image).exactly(6).times.and_return("ON IMAGE")
+      helper.should_receive(:off_image).exactly(1).times.and_return("OFF IMAGE")
+      helper.user_skill_image(6)
+    end
     it "should get the on image" do
       helper.on_image.should match(/<img alt=\"On\" class=\"user_skill_image\" src=\"\/images\/pill_on.png?.*\" \/>/)
     end

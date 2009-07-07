@@ -19,8 +19,10 @@ module UserSkillsHelper
   end
   
   def user_skill_image(user_skill)
+    level = user_skill.is_a?(UserSkill) ? user_skill.level : user_skill.to_i
+    
     total = 7
-    on = user_skill.level
+    on = level
     off = total - on
     
     images = ""

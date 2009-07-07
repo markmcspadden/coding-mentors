@@ -9,14 +9,22 @@
 
   <p>
     <%= f.label @mentor ? "I'd like help with:" : "I'd like to help with:" %><br />
-    (skill - mentor level/apprentice level)
     <br/>
     <% @matched_skills.each do |matched_skill| %>
-      <% skill = matched_skill[:skill] %>
+      <% skill = matched_skill[:skill] %>      
       <% mentor_level = matched_skill[:mentor_level] %>
       <% mentee_level = matched_skill[:mentee_level] %>
-      <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %>
-      - <%= "#{mentor_level}/#{mentee_level}"%>
+
+      
+      <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>
+        
+      <span class="mentorship_skills">
+        <%= user_skill_image mentor_level %> Mentor Level
+      </span><br/>
+      <span class="mentorship_skills">
+        <%= user_skill_image mentee_level %> Mentee Level
+      </span>
+
       <br/>
     <% end %>
     
