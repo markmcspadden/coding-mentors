@@ -1,4 +1,7 @@
-<% @content_title = "Learn. Teach. Repeat." %>
+<% learn_skill = Skill.first %>
+<% teach_skill = Skill.last %>
+
+<% @content_title = "Learn #{learn_skill}<br/><br/>Teach #{teach_skill}" %>
 
 <p>
   This is Coding Mentors, a community dedicated to helping people improve their coding chops and share the wealth with others. Take a look around and see if there's someone you can help out...or someone you can get some help from.
