@@ -13,6 +13,10 @@ describe MentorshipsController do
     it "maps #show" do
       route_for(:controller => "mentorships", :action => "show", :id => "1").should == "/mentorships/1"
     end
+    
+    it "maps #created" do
+      route_for(:controller => "mentorships", :action => "created", :id => "1").should == "/mentorships/1/created"
+    end    
   
     it "maps #edit" do
       route_for(:controller => "mentorships", :action => "edit", :id => "1").should == "/mentorships/1/edit"
@@ -50,6 +54,10 @@ describe MentorshipsController do
   
     it "generates params for #show" do
       params_from(:get, "/mentorships/1").should == {:controller => "mentorships", :action => "show", :id => "1"}
+    end
+
+    it "generates params for #created" do
+      params_from(:get, "/mentorships/1/created").should == {:controller => "mentorships", :action => "created", :id => "1"}
     end
   
     it "generates params for #edit" do

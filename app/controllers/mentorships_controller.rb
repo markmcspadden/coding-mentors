@@ -81,7 +81,7 @@ class MentorshipsController < ApplicationController
     respond_to do |format|
       if @mentorship.save
         flash[:notice] = 'Mentorship was successfully created.'
-        format.html { redirect_to(@mentorship) }
+        format.html { redirect_to created_mentorship_url(@mentorship) }
         format.xml  { render :xml => @mentorship, :status => :created, :location => @mentorship }
       else
         format.html { render :action => "new" }
@@ -119,7 +119,15 @@ class MentorshipsController < ApplicationController
     end
   end
   
-  # GET /mentorships/1/response
+  # GET /mentorships/1/created
+  def created
+    @mentorship = Mentorship.find(params[:id])        
+    
+    @mentor = @mentorship.mentor
+    @mentee = @mentorship.mentee    
+  end
+  
+  # GET /mentorships/1/respond
   def respond
     @mentorship = Mentorship.find(params[:id])
     

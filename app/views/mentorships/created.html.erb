@@ -1,0 +1,17 @@
+<% @content_title = "Thanks for getting the ball rolling..." %>
+
+<% not_current_user = current_user == @mentor ? @mentee : @mentor %>
+
+<p>
+  We will be sending an email off to <%= not_current_user.name %> shortly and hopefully you'll hear something back soon.
+</p>
+
+<p>
+  Until then....(give person something cool to do)
+  
+  code kata?
+  
+  find someone to mentor?
+  
+  need a mascot....flickr picture of the mascot
+</p>

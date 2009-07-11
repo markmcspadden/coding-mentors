@@ -183,7 +183,7 @@ describe MentorshipsController do
       it "redirects to the created mentorship" do
         Mentorship.stub!(:new).and_return(mock_mentorship(:save => true, :skills= => true))
         do_post
-        response.should redirect_to(mentorship_url(mock_mentorship))
+        response.should redirect_to(created_mentorship_url(mock_mentorship))
       end
     end
     
@@ -260,6 +260,40 @@ describe MentorshipsController do
       response.should redirect_to(mentorships_url)
     end
   end
+  
+  describe "GET created" do
+    before(:each) do
+      @u1 = mock_model(User)
+      @u2 = mock_model(User)
+      
+      @mentorship = mock_model(Mentorship, :sender => @u1, :mentee => @u1, :receiver => @u2, :mentor => @u2)
+      Mentorship.stub!(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+    end
+    def do_get
+      get :respond, :id => @mentorship.id
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    it "should lookup the Mentorship by id" do
+      Mentorship.should_receive(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+      do_get
+    end
+    it "should assign the found mentorship to @mentorship" do
+      do_get
+      assigns[:mentorship].should == @mentorship
+    end
+    it "should assign the mentorship's mentor to @mentor" do
+      do_get
+      assigns[:mentor].should == @mentorship.mentor
+    end
+    it "should assign the mentorship's mentee to @mentee" do
+      do_get
+      assigns[:mentee].should == @mentorship.mentee
+    end    
+  end # GET created
   
   describe "GET respond" do
     before(:each) do
