@@ -1,28 +1,48 @@
 <% if @mentee == current_user %>
   <% @content_title = "Interested in being Mentored by #{@mentor.name}?"%>
+  <% not_current_user = @mentor %>
 <% elsif @mentor == current_user %>
   <% @content_title = "Interested in Mentoring #{@mentee.name}?"%>
+  <% not_current_user = @mentee %>
 <% end %>
 
+<h2>Commitment</h2>
+<p>
+  We are currently asking everyone that starts one of these relationships to commit for a time of <strong>4 weeks.</strong> (If both parties want to continue on past 4 weeks, that is very cool, but we feel like this is a good time frame to start with.)
+</p>
+<p>  
+  This commitment will run until close to <strong><%= display_date Time.now.advance(:weeks => 4) %>.</strong> (Depending on if/when it's accepted.)
+</p>
+
+<h2>Availability</h2>
+
+<p>
+  <%= not_current_user.name %> is currently available for <strong><%= not_current_user.remote_availability %> remotely</strong> and <strong><%= not_current_user.local_availability %> locally</strong>.
+</p>
+
+<h2>Subject Matter</h2> 
 <% form_for(@mentorship) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label @mentor ? "I'd like help with:" : "I'd like to help with:" %><br />
+    <strong>
+      <%#= f.label @mentor ? "I'd like help with:" : "I'd like to help with:" %>
+      Matching Skills
+    </strong>
     <br/>
     <% @matched_skills.each do |matched_skill| %>
       <% skill = matched_skill[:skill] %>      
-      <% mentor_level = matched_skill[:mentor_level] %>
-      <% mentee_level = matched_skill[:mentee_level] %>
+      <% current_user_level = current_user == @mentor ? matched_skill[:mentor_level] : matched_skill[:mentee_level] %>
+      <% not_current_user_level = not_current_user == @mentor ? matched_skill[:mentor_level] : matched_skill[:mentee_level] %>
 
       
       <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>
         
       <span class="mentorship_skills">
-        <%= user_skill_image mentor_level %> Mentor Level
+        <%= user_skill_image not_current_user_level %> <%= not_current_user.name %>'s Level
       </span><br/>
       <span class="mentorship_skills">
-        <%= user_skill_image mentee_level %> Mentee Level
+        <%= user_skill_image current_user_level %> Your Level
       </span>
 
       <br/>
@@ -30,25 +50,29 @@
     
   </p>
   
-  <p>
-    All skills either you or <%= @receiver %> have<br/>
+  <p id="all_skills_link">
+      <%= link_to_function "Show non-matching skills", "$('all_skills_link').hide(); $('all_skills').show()" %>
+  </p>
+  
+  <div id="all_skills" style="display: none;">
+    <strong>
+      All skills either you or <%= @receiver %> have
+    </strong>  
+    <br/>
     <% @other_skills.each do |skill| %>
       <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>    
     <% end %>
-  </p>
+    <%= link_to_function "Nevermind", "$('all_skills').hide(); $('all_skills_link').show(); $('all_skills').descendants().each(function(element) { if(element.type == 'checkbox') { element.checked = false; }});"%>
+  </div>
   
   <p>
-    <%= f.label "Note" %><br />
-    <%= f.text_area :sender_note %>
+    <strong><%= f.label :sender_note, "Anything else you'd like to share with #{not_current_user.name}" %></strong><br />
+    <%= f.text_area :sender_note, :rows => 4 %>
   </p>
-  
-  <hr />
   
   <%= render "form", :f => f %>
 
   <p>
-    <%= f.submit 'Create' %>
+    <%= f.submit 'Send' %>
   </p>
 <% end %>
-
-<%= link_to 'Back', mentorships_path %>

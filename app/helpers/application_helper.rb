@@ -4,4 +4,8 @@ module ApplicationHelper
   def current_user
     @current_user
   end
+  
+  def display_date(datetime)
+    datetime.strftime("%B %d, %Y")
+  end
 end
