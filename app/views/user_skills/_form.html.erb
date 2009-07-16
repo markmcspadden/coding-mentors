@@ -2,12 +2,12 @@
 <%= f.text_field :skill_name %>
 <br/>
 <%= f.label "Level" %>
-<%= f.select :level, Skill.levels %>
+<%= f.select :level, Skill.levels.collect{ |s| [s[1], s[0]]} %>
 <%= link_to_function "what?", "Element.toggle('skill_levels_help')"%>
-<dl id="skill_levels_help" style="display: none;">
-  <% Skill.levels.each do |desc| %>
-    <dt><%= desc[0] %></dt>
-    <dd><%= desc[2] %></dd>
+<dl id="skill_levels_help">
+  <% Skill.levels.each do |level| %>
+    <dt><%= level[1] %></dt>
+    <dd><%= level[2] %></dd>
   <% end %>
   <br/>
   These are based on the Seven Stages of Software Expertise by Meilir Page-Jones and Wayland Systems Inc.
