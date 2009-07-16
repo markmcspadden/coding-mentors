@@ -5,10 +5,11 @@
 <%= f.select :level, Skill.levels %>
 <%= link_to_function "what?", "Element.toggle('skill_levels_help')"%>
 <dl id="skill_levels_help" style="display: none;">
-  <% Skill.level_descriptions.to_a.each do |desc| %>
+  <% Skill.levels.each do |desc| %>
     <dt><%= desc[0] %></dt>
-    <dd><%= desc[1] %></dd>
+    <dd><%= desc[2] %></dd>
   <% end %>
+  <br/>
   These are based on the Seven Stages of Software Expertise by Meilir Page-Jones and Wayland Systems Inc.
   <br/>
   <a href="http://www.waysys.com/ws_content_al_sse.html">Read More about these Stages.</a>
