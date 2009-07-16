@@ -3,6 +3,8 @@
 </script>
 <script type="text/javascript" src="/javascripts/skills.js"></script>
 
+<% mirror = (@user == current_user) %>
+
 <% @content_title = @user.name %>
 
 <div class="skinny_left">
@@ -36,7 +38,7 @@
 
     <p>
       <% if @user.available_to_mentor %>
-        <%= link_to "Become #{@user.name}'s Apprentice", new_mentorship_path(:mentor_id => @user.id) %>
+        <%= link_to("Become #{@user.name}'s Apprentice", new_mentorship_path(:mentor_id => @user.id)) if !mirror %>
       <% else %>
         
       <% end %>
@@ -44,7 +46,7 @@
 
     <p>
       <% if @user.available_to_be_mentored %>
-        <%= link_to "Become #{@user.name}'s Mentor", new_mentorship_path(:mentee_id => @user.id) %>
+        <%= link_to("Become #{@user.name}'s Mentor", new_mentorship_path(:mentee_id => @user.id)) if !mirror %>
       <% else %>
         
       <% end %>
