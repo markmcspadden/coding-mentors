@@ -21,6 +21,7 @@ describe "/mentorships/index.html.erb" do
   end
 
   it "renders a list of mentorships" do
+    pending "Not specing views"
     render
     response.should have_tag("tr>td", 1.to_s, 2)
     response.should have_tag("tr>td", 1.to_s, 2)

@@ -69,7 +69,7 @@ class Mentorship < ActiveRecord::Base
     mentor.user_skills.select do |us|
       comparable = UserSkill.find_by_user_id_and_skill_id(mentee.id, us.skill_id)
       if comparable
-        ms << {:skill => us.skill, :mentor_level => us.level, :mentee_level => comparable.level}
+        ms << {:skill => us.skill, :mentor_user_skill => us, :mentee_user_skill => comparable}
       end
     end
     
@@ -78,9 +78,22 @@ class Mentorship < ActiveRecord::Base
   
   def suggested_skills
     suggested_matched_skills = matched_skills.select do |ms|
-                              ms[:mentor_level] >= ms[:mentee_level]
+                              ms[:mentor_user_skill].level >= ms[:mentee_user_skill].level
                             end
     suggested_matched_skills.collect{ |ms| ms[:skill] }
+  end
+  
+  def selected_skills
+    ss = []
+    
+    mentorship_skills.each do |ms|
+      mentor_user_skill = UserSkill.find_by_user_id_and_skill_id(mentor.id, ms.skill_id)
+      mentee_user_skill = UserSkill.find_by_user_id_and_skill_id(mentee.id, ms.skill_id)
+
+      ss << {:skill => ms.skill, :mentor_user_skill => mentor_user_skill, :mentee_user_skill => mentee_user_skill}
+    end
+    
+    ss    
   end
 
 end

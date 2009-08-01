@@ -135,5 +135,12 @@ class MentorshipsController < ApplicationController
     @receiver = @mentorship.receiver
     @mentor = @mentorship.mentor
     @mentee = @mentorship.mentee
+    
+    @selected_skills = @mentorship.selected_skills
+    
+    respond_to do |format|
+      format.html # respond.html.erb
+      # format.xml  { render :xml => @mentorship }
+    end
   end
 end

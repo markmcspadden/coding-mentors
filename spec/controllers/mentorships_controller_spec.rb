@@ -270,7 +270,7 @@ describe MentorshipsController do
       Mentorship.stub!(:find).with(@mentorship.id.to_s).and_return(@mentorship)
     end
     def do_get
-      get :respond, :id => @mentorship.id
+      get :created, :id => @mentorship.id
     end
     
     it "should be successful" do
@@ -302,6 +302,9 @@ describe MentorshipsController do
       
       @mentorship = mock_model(Mentorship, :sender => @u1, :mentee => @u1, :receiver => @u2, :mentor => @u2)
       Mentorship.stub!(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+      
+      @selected_skills = []
+      @mentorship.stub!(:selected_skills).and_return(@selected_skills)
     end
     def do_get
       get :respond, :id => @mentorship.id
@@ -338,6 +341,11 @@ describe MentorshipsController do
     it "should assign the mentorship's mentee to @mentee" do
       do_get
       assigns[:mentee].should == @mentorship.mentee
+    end
+    it "should get the selected skills and assign them to @selected_skills" do
+      @mentorship.should_receive(:selected_skills).and_return(@selected_skills)
+      do_get
+      assigns[:selected_skills].should == @selected_skills
     end                
   end
 

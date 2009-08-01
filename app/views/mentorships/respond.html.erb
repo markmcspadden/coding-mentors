@@ -1,35 +1,66 @@
-<% if @reciever == @mentor %>
-  <% @content_title = "Would you like to Mentor #{@mentee}?"%>
-<% else %>
-  <% @content_title = "Would you like to be Mentored by #{@mentor}?"%>
+<% if @mentee == current_user %>
+  <% @content_title = "Interested in being Mentored by #{@mentor.name}?"%>
+  <% not_current_user = @mentor %>
+<% elsif @mentor == current_user %>
+  <% @content_title = "Interested in Mentoring #{@mentee.name}?"%>
+  <% not_current_user = @mentee %>
 <% end %>
 
+<%= render "details", :not_current_user => not_current_user %>
+
+<h2>Subject Matter</h2>
+
+<strong><%= not_current_user %> would like help with:</strong>
+
+<ul>
+  <% @selected_skills.each do |selected_skill| %>
+    <li>
+      <%= selected_skill[:skill] %><br/>
+      <%= skill_comparison(selected_skill[:skill], selected_skill[:mentor_user_skill], selected_skill[:mentee_user_skill])%>
+    </li>
+  <% end %>
+</ul>
+
+<% unless @mentorship.sender_note.blank? %>
+  <strong>Comments from <%= @sender %>:</strong>
+  <p>
+    <%= @mentorship.sender_note %>
+  </p>
+<% end %>
+
+<h2>Next Steps</h2>
+
 <script>
-  function toggleResponse(yes_or_no) {
-    var mentorship_yes = $('mentorship_yes');
-    var mentorship_no = $('mentorship_no');
+  function toggleResponses() {
+    value = $('response_text').value;
     
-    if(yes_or_no) {
-      mentorship_no.hide();
-      mentorship_yes.show()
-    }
-    else {
-      mentorship_yes.hide();
-      mentorship_no.show();
-    }
+    //Hide all the response
+    $$('div.mentorship_response').each(function(el){ el.hide(); });
+    
+    //Show the choosen one if it exists
+    if(!$('response_' + value)) { return false; }
+    
+    $('response_' + value).show();
   }
 </script>
 
-<%= link_to_function "I'm in!", "toggleResponse(true)" %> | 
-<%= link_to_function "I'll pass", "toggleResponse(false)" %>
+We need to what you're thinking on this:
 
-<div id="mentorship_yes">
+<%= select_tag "response_text", options_for_select([["", 0],["Sounds good. I think I'm down for it.", 1], ["Thanks but I think I'll pass.", 2], ["I need some more info.", 3]]), :onchange => "toggleResponses()"%>
+
+<div id="response_1" class="mentorship_response" style="display:none;">
+  <p>
+    After you hit the <strong>"Accept"</strong> button below, we'll send your email address to <%= @sender %> and we'll send <%= @sender %>'s email address to you.
+    <br/>
+    If there are any other instructions or information you'd like to send to <%= @sender %> now, feel free to include those below.
+  </p>
+  
   <% form_for(@mentorship) do |f| %>
     <%= f.error_messages %>
 
-    <%= f.label :receiver_note, "Let's get Started" %>
+    <%= f.label :receiver_note, "Additional Information or Instructions" %>
     <br/>
-    <%= f.text_area :receiver_note %>
+    <%= f.text_area :receiver_note, :rows => 3 %>
     
     <%= f.hidden_field :accepted?, :value => 1 %>
     <%= f.hidden_field :rejected?, :value => 0 %>
@@ -41,13 +72,19 @@
   
 </div>
 
-<div id="mentorship_no" style="display: none;">
+<div id="response_2" style="display: none;" class="mentorship_response">
+  <p>
+    After you hit the <strong>"Reject"</strong> button below, we'll let <%= @sender %> know that you will be unavailable.
+    <br/>
+    If you would like to give <%= @sender %> some more info, resources, or referrals, feel free to include those below.
+  </p>  
+  
   <% form_for(@mentorship) do |f| %>
     <%= f.error_messages %>
 
-    <%= f.label :receiver_note, "See the thing is..." %>
+    <%= f.label :receiver_note, "Additional Information, Resources, or Referrals" %>
     <br/>
-    <%= f.text_area :receiver_note %>
+    <%= f.text_area :receiver_note, :rows => 3 %>
     
     <%= f.hidden_field :accepted?, :value => 0 %>
     <%= f.hidden_field :rejected?, :value => 1 %>
@@ -56,4 +93,10 @@
       <%= f.submit 'Reject' %>
     </p>
   <% end %>  
+</div>
+
+<div id="response_3" style="display: none;" class="mentorship_response">
+ <strong>Coming soon.</strong>
+ <br/><br/>
+ We are working on bringing support for this state...
 </div>

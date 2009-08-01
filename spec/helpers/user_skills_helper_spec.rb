@@ -41,4 +41,45 @@ describe UserSkillsHelper do
     
   end # user skill image
   
+  describe "user skill comparison" do
+    before(:each) do
+      helper.stub!(:current_user).and_return(mock_model(User))
+      @u1 = mock_model(User, :name => "Mark McSpadden")
+      @u2 = mock_model(User, :name => "Dave Kruse")
+      
+      @us1 = mock_model(UserSkill, :skill => @skill, :user => @u1, :level => 4)
+      @us2 = mock_model(UserSkill, :skill => @skill, :user => @u2, :level => 3)
+      
+      helper.should_receive(:user_skill_image).with(@us1.level).and_return("4")
+      helper.should_receive(:user_skill_image).with(@us2.level).and_return("3")
+    end
+    
+    it "should compare two user's skills" do      
+      comparison_html = <<-EOS
+        <span class="mentorship_skills">
+          4 Mark McSpadden's Level
+        </span><br/>
+        <span class="mentorship_skills">
+          3 Dave Kruse's Level
+        </span>
+      EOS
+      
+      helper.skill_comparison(@skill, @us1, @us2).should == comparison_html.strip.gsub(/\n\s*/,"")     
+    end
+    
+    it "should acknowledge the current_user with 'Your Level' inside of generic 'Name Level'" do
+      helper.stub!(:current_user).and_return(@u2)
+      comparison_html = <<-EOS
+        <span class="mentorship_skills">
+          4 Mark McSpadden's Level
+        </span><br/>
+        <span class="mentorship_skills">
+          3 Your Level
+        </span>
+      EOS
+      
+      helper.skill_comparison(@skill, @us1, @us2).should == comparison_html.strip.gsub(/\n\s*/,"")      
+    end
+  end # user skill comparison
+  
 end

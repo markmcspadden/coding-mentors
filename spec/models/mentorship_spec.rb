@@ -173,9 +173,9 @@ describe Mentorship do
           UserSkill.should_receive(:find_by_user_id_and_skill_id).with(@mentee.id, us.skill_id).and_return(us)
         end
         
-        @mentorship.matched_skills.should == [{:skill => @s1, :mentor_level => 6, :mentee_level => 1},
-                                               {:skill => @s2, :mentor_level => 3, :mentee_level => 3},
-                                               {:skill => @s3, :mentor_level => 3, :mentee_level => 5},]
+        @mentorship.matched_skills.should == [{:skill => @s1, :mentor_user_skill => @us1, :mentee_user_skill => @us4},
+                                               {:skill => @s2, :mentor_user_skill => @us2, :mentee_user_skill => @us5},
+                                               {:skill => @s3, :mentor_user_skill => @us3, :mentee_user_skill => @us6},]
       end
     end # matched user skills
     
@@ -188,6 +188,17 @@ describe Mentorship do
         @mentorship.suggested_skills.should == [@s1, @s2]
       end
     end # suggesting skills
-
+    
+    describe "selected skills" do
+      it "should get the skills and user levels that have been selected" do
+        @ms1 = mock_model(MentorshipSkill, :skill => @s1, :mentorship => @mentorship, :skill_id => @s1.id)
+        @mentorship.stub!(:mentorship_skills).and_return([@ms1])
+        
+        UserSkill.should_receive(:find_by_user_id_and_skill_id).with(@mentor.id, @s1.id).and_return(@us1)
+        UserSkill.should_receive(:find_by_user_id_and_skill_id).with(@mentee.id, @s1.id).and_return(@us4)
+        
+        @mentorship.selected_skills.should == [{:skill => @s1, :mentor_user_skill => @us1, :mentee_user_skill => @us4}]
+      end
+    end
   end # skills
 end

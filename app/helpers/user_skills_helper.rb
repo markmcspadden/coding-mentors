@@ -33,6 +33,16 @@ module UserSkillsHelper
     images
   end
   
+  def skill_comparison(skill, *user_skills)
+    spans = []
+    for user_skill in user_skills do 
+      name_text = user_skill.user == current_user ? "Your" : "#{user_skill.user.name}'s"
+      level_text = "#{user_skill_image(user_skill.level)} #{name_text} Level"
+      spans << content_tag("span", level_text, :class => "mentorship_skills")
+    end
+    spans.join("<br/>")
+  end
+  
   def on_image
     image_tag "pill_on.png", :alt => "On", :class => "user_skill_image"
   end

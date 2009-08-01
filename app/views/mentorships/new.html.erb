@@ -6,19 +6,7 @@
   <% not_current_user = @mentee %>
 <% end %>
 
-<h2>Commitment</h2>
-<p>
-  We are currently asking everyone that starts one of these relationships to commit for a time of <strong>4 weeks.</strong> (If both parties want to continue on past 4 weeks, that is very cool, but we feel like this is a good time frame to start with.)
-</p>
-<p>  
-  This commitment will run until close to <strong><%= display_date Time.now.advance(:weeks => 4) %>.</strong> (Depending on if/when it's accepted.)
-</p>
-
-<h2>Availability</h2>
-
-<p>
-  <%= not_current_user.name %> is currently available for <strong><%= not_current_user.remote_availability %> remotely</strong> and <strong><%= not_current_user.local_availability %> locally</strong>.
-</p>
+<%= render "details", :not_current_user => not_current_user %>
 
 <h2>Subject Matter</h2> 
 <% form_for(@mentorship) do |f| %>
@@ -32,18 +20,13 @@
     <br/>
     <% @matched_skills.each do |matched_skill| %>
       <% skill = matched_skill[:skill] %>      
-      <% current_user_level = current_user == @mentor ? matched_skill[:mentor_level] : matched_skill[:mentee_level] %>
-      <% not_current_user_level = not_current_user == @mentor ? matched_skill[:mentor_level] : matched_skill[:mentee_level] %>
+      <% current_user_user_skill = current_user == @mentor ? matched_skill[:mentor_user_skill] : matched_skill[:mentee_user_skill] %>
+      <% not_current_user_user_skill = not_current_user == @mentor ? matched_skill[:mentor_user_skill] : matched_skill[:mentee_user_skill] %>
 
       
       <%= check_box_tag "skills[#{skill.id}]" %><%= skill.name %><br/>
-        
-      <span class="mentorship_skills">
-        <%= user_skill_image not_current_user_level %> <%= not_current_user.name %>'s Level
-      </span><br/>
-      <span class="mentorship_skills">
-        <%= user_skill_image current_user_level %> Your Level
-      </span>
+      
+      <%= skill_comparison(skill, not_current_user_user_skill, current_user_user_skill) %>  
 
       <br/>
     <% end %>

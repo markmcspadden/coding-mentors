@@ -1,4 +1,4 @@
-<h1>Listing mentorships</h1>
+<% @content_title = "Listing mentorships" %>
 
 <table>
   <tr>
@@ -13,10 +13,10 @@
 
 <% @mentorships.each do |mentorship| %>
   <tr>
-    <td><%=h mentorship.mentee_id %></td>
-    <td><%=h mentorship.mentor_id %></td>
-    <td><%=h mentorship.sender_id %></td>
-    <td><%=h mentorship.receiver_id %></td>
+    <td><%= link_to mentorship.mentee, user_path(mentorship.mentee) %></td>
+    <td><%= link_to mentorship.mentor, user_path(mentorship.mentor) %></td>
+    <td><%= link_to mentorship.sender, user_path(mentorship.sender) %></td>
+    <td><%= link_to mentorship.receiver, user_path(mentorship.receiver) %></td>
     <td><%=h mentorship.accepted_at %></td>
     <td><%=h mentorship.rejected_at %></td>
     <td><%=h mentorship.completed_at %></td>
