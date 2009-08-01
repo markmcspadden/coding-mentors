@@ -1,0 +1,16 @@
+Hey <%= @receiver.name %>,
+
+<%= @sender.name %> has agreed to mentor you in <%= @skills %>.
+
+<%= @sender.name %>'s email address is <%= @sender.email %>.
+
+<% unless @mentorship.receiver_note.blank? -%>
+<%= @sender.name %> also wanted to send you the following note:
+<blockquote>
+<%= @mentorship.receiver_note %>
+</blockquote>
+<% end -%>
+
+Good luck on this endeavor. We'll be checking in to see how things are going!
+
+Your Friends at Coding Mentors
