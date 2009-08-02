@@ -7,5 +7,12 @@ describe PagesHelper do
     included_modules = (class << helper; self; end).send :included_modules
     included_modules.should include(PagesHelper)
   end
+  
+  it "should create some pretty title skill text" do
+    @s1 = mock_model(Skill, :name => "Ruby")
+    @s2 = mock_model(Skill, :name => "Erlang")
+    
+    helper.title_skills(@s2, @s1).should == "Learn <span class=\"title_skill\">Erlang</span> &nbsp;&nbsp;<small>or</small>&nbsp;&nbsp; Teach <span class=\"title_skill\">Ruby</span>"
+  end
 
 end

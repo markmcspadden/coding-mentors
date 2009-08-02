@@ -1,0 +1,19 @@
+<div class="users">
+<% users.each do |user| %>
+  <div class="user">
+    <h3><%= link_to user.name, user_path(user) %></h3>
+    <%= user_image user, :gravatar_options => {:size => 50} %>
+    <div class="user_content">
+      <%= user.user_skills.collect{ |us| display_user_skill us }.join("<br/>") %>
+      <br/>
+      Remote availability: <%=h user.remote_availability %>
+      <br/>
+      Local availability: <%=h user.local_availability %>
+      <br/>
+      Available to Mentor: <%=h user.available_to_mentor %>
+      <br/>
+      Available to be Mentored: <%=h user.available_to_be_mentored %>
+    </div>
+  </div>
+<% end %>
+</div>

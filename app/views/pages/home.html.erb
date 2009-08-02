@@ -1,23 +1,11 @@
-<% learn_skill = Skill.first %>
-<% teach_skill = Skill.last %>
+<% learn_skill = @skills.first %>
+<% teach_skill = @skills.last %>
 
-<% @content_title = "Learn #{learn_skill}<br/><br/>Teach #{teach_skill}" %>
+<% @content_title = title_skills(learn_skill, teach_skill) %>
 
 <p>
   This is Coding Mentors, a community dedicated to helping people improve their coding chops and share the wealth with others. Take a look around and see if there's someone you can help out...or someone you can get some help from.
 </p>
 
-<div class="two_columns">
-  <div class="left_column">
-    <h2>People Looking to Learn</h2>
-
-    # TODO: Add people here.
-  </div>
-  
-  <div class="right_column">
-    <h2>People Ready to Teach</h2>
-    
-    # TODO: Add people here.
-  </div>
-  <div class="clear" />
-</div>
+<h2>A Few of the Folks Hanging Around...</h2>
+<%= render "/users/list", :users => @users %>
