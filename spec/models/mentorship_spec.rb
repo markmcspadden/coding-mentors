@@ -19,6 +19,88 @@ describe Mentorship do
     @mentorship.should be_valid
   end
   
+  describe "life cycle" do
+    before(:each) do
+      @mentee = mock_model(User)
+      @mentor = mock_model(User)
+      
+      @mentorship.mentee = @mentee
+      @mentorship.mentor = @mentor
+    end
+    
+    describe "when the mentorship is created" do
+      def after_create
+        @mentorship.after_create
+      end
+      
+      it "should send an email to mentor if the mentee is the sender" do
+        @mentorship.sender = @mentee
+        @mentorship.receiver = @mentor
+        
+        MentorshipMailer.should_receive(:deliver_new_mentorship_to_mentor).with(@mentorship).and_return(true)
+        
+        after_create
+      end
+      it "should send an email to the mentee if the mentor is the sender" do
+        @mentorship.sender = @mentor
+        @mentorship.receiver = @mentee
+        
+        MentorshipMailer.should_receive(:deliver_new_mentorship_to_mentee).with(@mentorship).and_return(true)
+        
+        after_create        
+      end
+    end # created
+    describe "when the mentorship is updated" do
+      before(:each) do
+        MentorshipMailer.stub!(:deliver_accepted_mentorship_to_mentor)
+        MentorshipMailer.stub!(:deliver_accepted_mentorship_to_mentee)
+      end
+      
+      def after_update
+        @mentorship.after_update
+      end
+      
+      describe "if the mentorship is accepted" do
+        before(:each) do
+          @mentorship.accepted_at = Time.now
+        end
+        
+        it "should send an email to mentor" do
+          MentorshipMailer.should_receive(:deliver_accepted_mentorship_to_mentor).with(@mentorship).and_return(true)
+
+          after_update
+        end
+        it "should send an email to the mentee" do
+          MentorshipMailer.should_receive(:deliver_accepted_mentorship_to_mentee).with(@mentorship).and_return(true)
+
+          after_update
+        end
+      end    
+      describe "if the mentorship is rejected" do
+        before(:each) do
+          @mentorship.rejected_at = Time.now
+        end
+        
+        it "should send an email to mentor if the mentor is the original sender" do
+          @mentorship.sender = @mentor
+          @mentorship.receiver = @mentee
+
+          MentorshipMailer.should_receive(:deliver_rejected_mentorship_to_mentor).with(@mentorship).and_return(true)
+
+          after_update
+        end
+        it "should send an email to the mentee if the mentee is the original sender" do
+          @mentorship.sender = @mentee
+          @mentorship.receiver = @mentor
+
+          MentorshipMailer.should_receive(:deliver_rejected_mentorship_to_mentee).with(@mentorship).and_return(true)
+
+          after_update
+        end
+      end      
+    end # updated  
+  end # life cycle
+  
   describe "states" do
     before(:each) do
       @now = Time.now

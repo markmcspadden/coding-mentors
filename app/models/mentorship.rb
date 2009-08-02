@@ -7,6 +7,32 @@ class Mentorship < ActiveRecord::Base
   
   has_many :mentorship_skills
   has_many :skills, :through => :mentorship_skills
+  
+  # LIFECYCLE  
+  def after_create
+    if self.sender == self.mentee
+      MentorshipMailer.deliver_new_mentorship_to_mentor(self)
+    end
+    if self.sender == self.mentor
+      MentorshipMailer.deliver_new_mentorship_to_mentee(self)
+    end
+  end
+  
+  def after_update
+    if self.accepted?
+      MentorshipMailer.deliver_accepted_mentorship_to_mentee(self)
+      MentorshipMailer.deliver_accepted_mentorship_to_mentor(self)      
+    end
+    
+    if self.rejected?
+      if self.sender == self.mentee
+        MentorshipMailer.deliver_rejected_mentorship_to_mentee(self)        
+      end
+      if self.sender == self.mentor
+        MentorshipMailer.deliver_rejected_mentorship_to_mentor(self)
+      end
+    end
+  end
 
   # Setup States based on xxx_at attributes
   # I know acts_as_state exists, I just wanted to role my own to see how close it would match
