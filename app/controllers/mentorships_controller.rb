@@ -97,8 +97,14 @@ class MentorshipsController < ApplicationController
 
     respond_to do |format|
       if @mentorship.update_attributes(params[:mentorship])
-        flash[:notice] = 'Mentorship was successfully updated.'
-        format.html { redirect_to(@mentorship) }
+        #flash[:notice] = 'Mentorship was successfully updated.'
+        format.html { 
+          if @mentorship.rejected?
+             redirect_to rejected_mentorship_url(@mentorship)
+          else  
+             redirect_to accepted_mentorship_url(@mentorship)            
+          end
+        }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -126,6 +132,22 @@ class MentorshipsController < ApplicationController
     @mentor = @mentorship.mentor
     @mentee = @mentorship.mentee    
   end
+
+  # GET /mentorships/1/accepted
+  def accepted
+    @mentorship = Mentorship.find(params[:id])        
+    
+    @mentor = @mentorship.mentor
+    @mentee = @mentorship.mentee    
+  end
+  
+  # GET /mentorships/1/rejected
+  def rejected
+    @mentorship = Mentorship.find(params[:id])        
+    
+    @mentor = @mentorship.mentor
+    @mentee = @mentorship.mentee    
+  end  
   
   # GET /mentorships/1/respond
   def respond

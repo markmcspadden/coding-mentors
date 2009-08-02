@@ -1,0 +1,7 @@
+<% @content_title = "Thanks for Accepting this Mentorship Opportunity" %>
+
+<% not_current_user = current_user == @mentor ? @mentee : @mentor %>
+
+<p>
+  We're sending an email off to <%= not_current_user.name %> and we wish you both the best of luck!
+</p>

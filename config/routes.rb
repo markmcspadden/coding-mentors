@@ -2,6 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_skills, :member => {:edit_inline => :get}
 
   map.resources :mentorships, :member => {:created => :get,
+                                          :accepted => :get,
+                                          :rejected => :get,
                                           :respond => :get}
 
   map.resources :users, :member => {:edit_availability => :get}

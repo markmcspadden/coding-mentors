@@ -205,7 +205,7 @@ describe MentorshipsController do
 
   describe "PUT update" do
     
-    describe "with valid params" do
+    describe "with valid params" do      
       it "updates the requested mentorship" do
         Mentorship.should_receive(:find).with("37").and_return(mock_mentorship)
         mock_mentorship.should_receive(:update_attributes).with({'these' => 'params'})
@@ -214,15 +214,31 @@ describe MentorshipsController do
 
       it "assigns the requested mentorship as @mentorship" do
         Mentorship.stub!(:find).and_return(mock_mentorship(:update_attributes => true))
+        @mock_mentorship.stub!(:rejected?).and_return(false)
+        
         put :update, :id => "1"
         assigns[:mentorship].should equal(mock_mentorship)
       end
 
-      it "redirects to the mentorship" do
+      it "redirects to the accepted page if mentorship was accepted" do
         Mentorship.stub!(:find).and_return(mock_mentorship(:update_attributes => true))
+        @mock_mentorship.stub!(:accepted?).and_return(true)
+        @mock_mentorship.stub!(:rejected?).and_return(false)
+
         put :update, :id => "1"
-        response.should redirect_to(mentorship_url(mock_mentorship))
+        
+        response.should redirect_to(accepted_mentorship_url(mock_mentorship))
       end
+      
+      it "redirects to the rejected page if mentorship was accepted" do
+        Mentorship.stub!(:find).and_return(mock_mentorship(:update_attributes => true))
+        @mock_mentorship.stub!(:accepted?).and_return(false)
+        @mock_mentorship.stub!(:rejected?).and_return(true)
+
+        put :update, :id => "1"
+        
+        response.should redirect_to(rejected_mentorship_url(mock_mentorship))
+      end      
     end
     
     describe "with invalid params" do
@@ -294,6 +310,74 @@ describe MentorshipsController do
       assigns[:mentee].should == @mentorship.mentee
     end    
   end # GET created
+  
+  describe "GET accepted" do
+    before(:each) do
+      @u1 = mock_model(User)
+      @u2 = mock_model(User)
+      
+      @mentorship = mock_model(Mentorship, :sender => @u1, :mentee => @u1, :receiver => @u2, :mentor => @u2)
+      Mentorship.stub!(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+    end
+    def do_get
+      get :accepted, :id => @mentorship.id
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    it "should lookup the Mentorship by id" do
+      Mentorship.should_receive(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+      do_get
+    end
+    it "should assign the found mentorship to @mentorship" do
+      do_get
+      assigns[:mentorship].should == @mentorship
+    end
+    it "should assign the mentorship's mentor to @mentor" do
+      do_get
+      assigns[:mentor].should == @mentorship.mentor
+    end
+    it "should assign the mentorship's mentee to @mentee" do
+      do_get
+      assigns[:mentee].should == @mentorship.mentee
+    end    
+  end # GET accepted  
+  
+  describe "GET rejected" do
+    before(:each) do
+      @u1 = mock_model(User)
+      @u2 = mock_model(User)
+      
+      @mentorship = mock_model(Mentorship, :sender => @u1, :mentee => @u1, :receiver => @u2, :mentor => @u2)
+      Mentorship.stub!(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+    end
+    def do_get
+      get :rejected, :id => @mentorship.id
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    it "should lookup the Mentorship by id" do
+      Mentorship.should_receive(:find).with(@mentorship.id.to_s).and_return(@mentorship)
+      do_get
+    end
+    it "should assign the found mentorship to @mentorship" do
+      do_get
+      assigns[:mentorship].should == @mentorship
+    end
+    it "should assign the mentorship's mentor to @mentor" do
+      do_get
+      assigns[:mentor].should == @mentorship.mentor
+    end
+    it "should assign the mentorship's mentee to @mentee" do
+      do_get
+      assigns[:mentee].should == @mentorship.mentee
+    end    
+  end # GET rejected  
   
   describe "GET respond" do
     before(:each) do

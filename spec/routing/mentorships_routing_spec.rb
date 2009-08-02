@@ -17,6 +17,14 @@ describe MentorshipsController do
     it "maps #created" do
       route_for(:controller => "mentorships", :action => "created", :id => "1").should == "/mentorships/1/created"
     end    
+
+    it "maps #accepted" do
+      route_for(:controller => "mentorships", :action => "accepted", :id => "1").should == "/mentorships/1/accepted"
+    end
+    
+    it "maps #rejected" do
+      route_for(:controller => "mentorships", :action => "rejected", :id => "1").should == "/mentorships/1/rejected"
+    end    
   
     it "maps #edit" do
       route_for(:controller => "mentorships", :action => "edit", :id => "1").should == "/mentorships/1/edit"
@@ -59,6 +67,14 @@ describe MentorshipsController do
     it "generates params for #created" do
       params_from(:get, "/mentorships/1/created").should == {:controller => "mentorships", :action => "created", :id => "1"}
     end
+
+    it "generates params for #accepted" do
+      params_from(:get, "/mentorships/1/accepted").should == {:controller => "mentorships", :action => "accepted", :id => "1"}
+    end
+    
+    it "generates params for #rejected" do
+      params_from(:get, "/mentorships/1/rejected").should == {:controller => "mentorships", :action => "rejected", :id => "1"}
+    end    
   
     it "generates params for #edit" do
       params_from(:get, "/mentorships/1/edit").should == {:controller => "mentorships", :action => "edit", :id => "1"}

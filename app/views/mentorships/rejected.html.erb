@@ -1,0 +1,7 @@
+<% @content_title = "We understand that things don't always work out" %>
+
+<% not_current_user = current_user == @mentor ? @mentee : @mentor %>
+
+<p>
+  We're sending an email off to inform <%= not_current_user.name %> that you'll be unavailable. We'll see you around!
+</p>
