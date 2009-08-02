@@ -2,7 +2,7 @@ div.users div.user {
 	min-height: 120px;
 	clear: both;
 	padding-bottom: 5px;
-	border-bottom: 1px solid #333333
+	border-bottom: 2px dashed #cccccc;
 }
 
 div.users div.user div.user_image {
