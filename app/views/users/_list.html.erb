@@ -1,18 +1,38 @@
 <div class="users">
 <% users.each do |user| %>
   <div class="user">
-    <h3><%= link_to user.name, user_path(user) %></h3>
     <%= user_image user, :gravatar_options => {:size => 50} %>
     <div class="user_content">
-      <%= user.user_skills.collect{ |us| display_user_skill us }.join("<br/>") %>
-      <br/>
-      Remote availability: <%=h user.remote_availability %>
-      <br/>
-      Local availability: <%=h user.local_availability %>
-      <br/>
-      Available to Mentor: <%=h user.available_to_mentor %>
-      <br/>
-      Available to be Mentored: <%=h user.available_to_be_mentored %>
+      <h3><%= link_to user.name, user_path(user) %></h3>
+      
+      <div class="user_availability">
+        <% if user.currently_mentoring? %>
+          is mentoring <%= link_to user.current_apprentice %><br/>
+        <% elsif user.available_to_mentor %>
+          is <%= link_to "available as a mentor", new_mentorship_path(:mentor_id => user.id) %><br/>
+        <% end %>
+        <% if user.currently_apprenticing? %>
+          is apprenticing under <%= link_to user.current_mentor %><br/>
+        <% elsif user.available_to_be_mentored %>
+          is <%= link_to "available as an apprentice", new_mentorship_path(:mentee_id => user.id) %><br/>
+        <% end %>
+        
+        <% if (user.available_to_mentor && !user.currently_mentoring?) || 
+              (user.available_to_be_mentored && !user.currently_apprenticing?) %>
+          <br/>
+          Availability:
+          <ul>
+            <li>Remote: <%=h user.remote_availability %></li>        
+            <li>Local: <%=h user.local_availability %></li>
+          </ul>
+        <% elsif !user.available_to_mentor && !user.available_to_be_mentored %>
+          is not currently available
+        <% end %>
+      </div>
+      <div class="user_skills">
+        <%= user.user_skills.collect{ |us| display_user_skill us }.join("<br/>") %>
+      </div>
+      <div style="clear:both"></div>
     </div>
   </div>
 <% end %>

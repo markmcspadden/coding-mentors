@@ -75,6 +75,28 @@ class User < ActiveRecord::Base
     user_skills_by_level(level).collect{ |us| us.skill }
   end
   
+  # Mentoring status
+  def current_mentoring_mentorship
+    Mentorship.find(:first, :conditions => ["mentor_id = ? AND accepted_at IS NOT NULL AND completed_at IS NULL", self.id])
+  end
+  def current_apprentice
+    current_mentoring_mentorship.mentee if current_mentoring_mentorship
+  end
+  def currently_mentoring?
+    current_mentoring_mentorship ? true : false
+  end
+  
+  # Apprenticing status
+  def current_apprenticing_mentorship
+    Mentorship.find(:first, :conditions => ["mentee_id = ? AND accepted_at IS NOT NULL AND completed_at IS NULL", self.id])
+  end
+  def current_mentor
+    current_apprenticing_mentorship.mentor if current_apprenticing_mentorship
+  end
+  def currently_apprenticing?
+    current_apprenticing_mentorship ? true : false
+  end
+  
   # Availability is text based at this time
   # I figure it will morph and change quite a bit at the beginning
   # However, I still wanted user dropdowns to give a good jumping off point

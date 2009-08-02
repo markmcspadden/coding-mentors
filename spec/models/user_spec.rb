@@ -65,24 +65,6 @@ describe User do
       @user.skills_by_level(1).should == [@s1]
       @user.skills_by_level(2).should == [@s2]
     end
-    it "should have novice user skills" do
-      pending "not yet implemented"
-    end
-    it "should have intermediate user skills" do
-      pending "not yet implemented"      
-    end
-    it "should have master user skills" do
-      pending "not yet implemented"      
-    end    
-    it "should have novice skills" do
-      pending "not yet implemented"      
-    end
-    it "should have intermediate skills" do
-      pending "not yet implemented"      
-    end
-    it "should have master skills" do
-      pending "not yet implemented"      
-    end
   end # skills (by level)
 
   describe "restful authentication" do
@@ -318,6 +300,56 @@ describe User do
   end # restful authentication
   
   describe "availability" do
+    describe "mentoring status" do
+      it "should try and get the current_mentoring_mentorship" do
+        Mentorship.should_receive(:find).with(:first, :conditions => ["mentor_id = ? AND accepted_at IS NOT NULL AND completed_at IS NULL", @user.id])
+        
+        @user.current_mentoring_mentorship
+      end
+      it "should get the current apprentice from the current mentoring mentorship" do
+        @u2 = mock_model(User)
+        @user.stub!(:current_mentoring_mentorship).and_return(mock_model(Mentorship, :mentee => @u2))
+        @user.current_apprentice.should == @u2
+      end
+      it "should have the current apprentice as nil if a current mentoring mentorship doesn't exist" do
+        @user.stub!(:current_mentoring_mentorship).and_return(nil)
+        @user.current_apprentice.should be_nil
+      end
+      it "should show that the user is currently mentoring if there is a current mentoring mentorship" do
+        @user.stub!(:current_mentoring_mentorship).and_return(mock_model(Mentorship))
+        @user.should be_currently_mentoring
+      end
+      it "should return nil if there is not a mentorship found" do
+        @user.stub!(:current_mentoring_mentorship).and_return(nil)
+        @user.should_not be_currently_mentoring
+      end
+    end # mentoring status
+    
+    describe "apprenticing status" do
+      it "should try and get the current apprenticing mentorship" do
+        Mentorship.should_receive(:find).with(:first, :conditions => ["mentee_id = ? AND accepted_at IS NOT NULL AND completed_at IS NULL", @user.id])
+        
+        @user.current_apprenticing_mentorship
+      end
+      it "should get the current mentor from the current apprenticing mentorship" do
+        @u2 = mock_model(User)
+        @user.stub!(:current_apprenticing_mentorship).and_return(mock_model(Mentorship, :mentor => @u2))
+        @user.current_mentor.should == @u2
+      end
+      it "should have the current mentor as nil if a current apprenticing mentorship doesn't exist" do
+        @user.stub!(:current_apprenticing_mentorship).and_return(nil)
+        @user.current_mentor.should be_nil
+      end
+      it "should show that the user is currently apprenticing if there is a current apprenticing mentorship" do
+        @user.stub!(:current_apprenticing_mentorship).and_return(mock_model(Mentorship))
+        @user.should be_currently_apprenticing
+      end
+      it "should return nil if there is not a mentorship found" do
+        @user.stub!(:current_apprenticing_mentorship).and_return(nil)
+        @user.should_not be_currently_apprenticing
+      end
+    end # apprenticing status
+    
     describe "remote" do
       it "should combine hours and increments for remote_availability" do
         @user.remote_availability_hours = "2"

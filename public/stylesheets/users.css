@@ -1,6 +1,8 @@
 div.users div.user {
 	min-height: 120px;
 	clear: both;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #333333
 }
 
 div.users div.user div.user_image {
@@ -9,6 +11,20 @@ div.users div.user div.user_image {
 
 div.users div.user div.user_content {
 	margin-left: 60px;
+}
+
+div.users div.user div.user_content div.user_availability {
+	float: left;
+	width: 20%;
+}
+div.users div.user div.user_content div.user_availability ul {
+	margin: 0 0 0 2em;
+	padding: 0;
+}
+
+
+div.users div.user div.user_content div.user_skills {
+	margin-left: 22%;
 }
 
 div.user_dets {
