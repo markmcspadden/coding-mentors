@@ -1,0 +1,14 @@
+Hey <%= @receiver.name %>,
+
+<%= @sender.name %> will not be available to mentor you in <%= @skills %>.
+
+<% unless @mentorship.receiver_note.blank? -%>
+<%= @sender.name %> did want to pass along this note:
+<blockquote>
+I'm really swamped this month. Maybe next month?
+</blockquote>
+<% end -%>
+
+We encourage you to keep looking for an apprentice and are more than happy to help in any way that we can.
+
+Your Friends at Coding Mentors

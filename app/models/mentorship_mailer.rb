@@ -20,6 +20,19 @@ class MentorshipMailer < ActionMailer::Base
     @subject = "#{@sender.name} would like to be mentored by you!"
   end
   
+  def new_mentorship_to_mentee(mentorship)
+    setup_email
+    
+    @receiver = mentorship.receiver
+    @sender = mentorship.sender
+    
+    @skills = mentorship.skills.collect{ |s| s.name }.to_sentence
+    @mentorship = mentorship
+
+    @recipients = @receiver.email
+    @subject = "#{@sender.name} would like to mentor you!"
+  end  
+  
   def accepted_mentorship_to_mentee(mentorship)
     setup_email
     
@@ -44,7 +57,33 @@ class MentorshipMailer < ActionMailer::Base
     
     @recipients = @receiver.email
     @subject = "#{@sender.name} has agreed to be your apprentice!"    
-  end  
+  end 
+  
+  def rejected_mentorship_to_mentee(mentorship)
+    setup_email
+    
+    @receiver = mentorship.mentee
+    @sender = mentorship.mentor
+    
+    @skills = mentorship.skills.collect{ |s| s.name }.to_sentence
+    @mentorship = mentorship    
+    
+    @recipients = @receiver.email
+    @subject = "#{@sender.name} will not be available to mentor you!"    
+  end
+  
+  def rejected_mentorship_to_mentor(mentorship)
+    setup_email
+    
+    @receiver = mentorship.mentor
+    @sender = mentorship.mentee
+    
+    @skills = mentorship.skills.collect{ |s| s.name }.to_sentence
+    @mentorship = mentorship    
+    
+    @recipients = @receiver.email
+    @subject = "#{@sender.name} will not be available to be your apprentice!"    
+  end   
   
   protected
   def setup_email
