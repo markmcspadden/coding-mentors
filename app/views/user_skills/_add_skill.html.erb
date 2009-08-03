@@ -11,7 +11,7 @@
 
   <% form_remote_for(:user_skill, @user_skill, :url => user_skills_path, :update => "skills_container", :html => {:method => :post, :class => "new_user_skill", :id => "new_user_skill"}) do |f| %>
     <p>
-      <%= render "/user_skills/form", :f => f %>
+      <%= render "/user_skills/form", :f => f, :user_skill => @user_skill %>
       <div id="autocomplete_skill_name" class="autocomplete"></div>
       <%= f.submit 'Add' %>
     </p>
