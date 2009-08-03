@@ -73,4 +73,26 @@ describe PagesController do
       response.should be_success
     end
   end
+  
+  describe "GET guides" do    
+    def do_get
+      get 'guides'
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+  end
+  
+  describe "GET about" do
+    def do_get
+      get 'about'
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+  end    
 end

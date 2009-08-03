@@ -50,6 +50,9 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search '/search', :controller => 'pages', :action => 'search'
 
+  map.guides '/guides', :controller => 'pages', :action => 'guides'
+  map.about '/about', :controller => 'pages', :action => 'about'  
+
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'pages', :action => 'home'
 

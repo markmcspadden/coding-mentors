@@ -13,5 +13,16 @@ class PagesController < ApplicationController
     @users = User.search(params[:q])
   end
   
+  # GET /guides
+  def guides
+    
+  end
+  
+  # GET /about
+  def about
+    
+  end
+
+  
 
 end
