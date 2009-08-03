@@ -45,5 +45,32 @@ describe PagesController do
       do_get
       response.should be_success
     end
+  end # GET home
+  
+  describe "GET search" do
+    before(:each) do
+      @users = []
+      User.stub!(:search).and_return(@users)
+    end
+    
+    def do_get(params={})
+      get 'search', params
+    end
+    
+    it "should get some users from search param if one is present" do
+      User.should_receive(:search).with("ruby")
+      
+      do_get(:q => "ruby")
+    end
+    
+    it "should assign the users as @users" do
+      do_get(:q => "ruby")
+      assigns[:users].should == @users
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
   end
 end

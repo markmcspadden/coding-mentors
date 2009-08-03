@@ -1,0 +1,8 @@
+<% @content_title = "Search#{': ' + h(params[:q]) unless params[:q].blank?}" %>
+
+<% form_for search_path, :html => {:method => :get} do |f| %>
+  <%= text_field_tag "q", h(params[:q]) %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<%= render "/users/list", :users => @users %>

@@ -425,6 +425,34 @@ describe User do
       
       User.random(3)
     end
+    
+    describe "search" do
+      def do_search(q="ruby")
+        User.search(q)
+      end
+      
+      it "should return an empty array if the search term is blank or nil" do
+        do_search("").should == []
+        do_search(nil).should == []
+      end
+      
+      it "should look for name match" do
+        User.should_receive(:find).with(:all, :conditions => ["name LIKE ?", "%ruby%"])
+        do_search
+      end
+      
+      it "should look for a skills match and find users associated to that skill" do
+        @s1 = mock_model(Skill, :id => 12)
+        @skills = [@s1]
+        
+        Skill.should_receive(:find).with(:all, :conditions => ["name LIKE ?", "%ruby%"]).and_return(@skills)
+        UserSkill.should_receive(:find).with(:all, 
+                                              :conditions => ["skill_id IN (?)", @skills.collect{ |s| s.id }],
+                                              :include => [:user]).and_return([])
+        
+        do_search
+      end
+    end
   end # singleton methods
 
 end

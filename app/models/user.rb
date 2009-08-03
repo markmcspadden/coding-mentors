@@ -191,6 +191,24 @@ class User < ActiveRecord::Base
       find(random_ids)
     end
     
+    # TODO: This obviously need to be handled by a full-text search index
+    # Thinking-Sphinx is a personal fav and it will probably be coming soon
+    def search(q)
+      return [] if q.blank?
+      
+      q = "%#{q}%"
+      
+      results = []
+      
+      # Look for name matches
+      results << User.find(:all, :conditions => ["name LIKE ?", q])
+      
+      # Look for skill matches
+      skills = Skill.find(:all, :conditions => ["name LIKE ?", q])
+      results << UserSkill.find(:all, :conditions => ["skill_id IN (?)", skills.collect{ |s| s.id }], :include => [:user]).collect{ |us| us.user }
+
+      results.flatten.compact.uniq
+    end
   end
 
 end
