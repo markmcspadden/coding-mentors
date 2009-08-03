@@ -1,6 +1,9 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  ### AUTHORIZATION
+  include Authorization::User::InstanceMethods
+  extend Authorization::User::SingletonMethods
   
   ###
   ### RESTFUL AUTHENTICATION
