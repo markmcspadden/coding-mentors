@@ -51,7 +51,11 @@ ActionController::Routing::Routes.draw do |map|
   map.search '/search', :controller => 'pages', :action => 'search'
 
   map.guides '/guides', :controller => 'pages', :action => 'guides'
-  map.about '/about', :controller => 'pages', :action => 'about'  
+  map.about '/about', :controller => 'pages', :action => 'about'
+  
+  # restful_acl routes
+  map.error '/error', :controller => 'pages', :action => 'error'
+  map.denied '/denied', :controller => 'pages', :action => 'denied' 
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'pages', :action => 'home'

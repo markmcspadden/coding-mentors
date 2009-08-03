@@ -16,7 +16,15 @@ describe PagesController do
     
     it "maps #about" do
       route_for(:controller => "pages", :action => "about").should == "/about"
-    end    
+    end
+    
+    it "maps #error" do
+      route_for(:controller => "pages", :action => "error").should == "/error"
+    end
+    
+    it "maps #denied" do
+      route_for(:controller => "pages", :action => "denied").should == "/denied"
+    end            
   end
   
   describe "route recognition" do
@@ -34,6 +42,14 @@ describe PagesController do
     
     it "generates params for #about" do
       params_from(:get, "/about").should == {:controller => "pages", :action => "about"}
-    end          
+    end
+    
+    it "generates params for #error" do
+      params_from(:get, "/error").should == {:controller => "pages", :action => "error"}
+    end
+    
+    it "generates params for #denied" do
+      params_from(:get, "/denied").should == {:controller => "pages", :action => "denied"}
+    end                      
   end
 end

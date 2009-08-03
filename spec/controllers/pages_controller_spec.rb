@@ -94,5 +94,27 @@ describe PagesController do
       do_get
       response.should be_success
     end
-  end    
+  end 
+  
+  describe "GET error" do
+    def do_get
+      get 'error'
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+  end
+  
+  describe "GET denied" do
+    def do_get
+      get 'denied'
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+  end       
 end
