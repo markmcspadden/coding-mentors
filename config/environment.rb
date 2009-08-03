@@ -12,7 +12,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/models/authorizations )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   # config.gem "bj"
@@ -22,7 +22,7 @@ Rails::Initializer.run do |config|
   config.gem 'rspec', :lib => false, :version => '>= 1.2.0'
   config.gem 'rspec-rails', :lib => false, :version => '>= 1.2.0'
   config.gem 'gravtastic', :version => '>= 2.1.0'
-  config.gem 'mdarby-restful_acl', :lib => 'restful_acl', :version => '>= 2.0.6' 
+  config.gem 'mdarby-restful_acl', :lib => false, :version => '>= 2.0.6' 
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
