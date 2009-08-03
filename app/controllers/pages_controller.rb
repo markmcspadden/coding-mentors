@@ -22,6 +22,16 @@ class PagesController < ApplicationController
   def about
     
   end
+  
+  # GET /error
+  def error
+    
+  end
+  
+  # GET /denied
+  def denied
+    
+  end
 
   
 
