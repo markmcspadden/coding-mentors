@@ -24,6 +24,9 @@ class Skill < ActiveRecord::Base
       # Get all the ids
       ids = connection.select_all("SELECT id FROM #{table_name}")
       
+      # Return [] if ids are empty
+      return [] if ids.empty?
+      
       # Get 'limit' number of random ids
       # Actually double the limit in case there are any duplicates
       random_ids = []

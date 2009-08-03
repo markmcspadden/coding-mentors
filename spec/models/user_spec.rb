@@ -405,26 +405,34 @@ describe User do
   end # availability
 
   describe "singleton methods" do
-    # NOTE: There is a plugin for this 
-    # If it starts being used alot in other places it'd probably be a good idea to look into
-    # http://github.com/mshiltonj/active_record_random_find/tree/master
-    it "should get a random user" do
-      @ids = [{"id"=>"1"}, {"id"=>"2"}, {"id"=>"3"}, 
-              {"id"=>"4"}, {"id"=>"5"}, {"id"=>"6"},
-              {"id"=>"7"}, {"id"=>"8"}, {"id"=>"9"}]
+    describe "random users" do
+      # NOTE: There is a plugin for this 
+      # If it starts being used alot in other places it'd probably be a good idea to look into
+      # http://github.com/mshiltonj/active_record_random_find/tree/master
+      it "should get a random user" do
+        @ids = [{"id"=>"1"}, {"id"=>"2"}, {"id"=>"3"}, 
+                {"id"=>"4"}, {"id"=>"5"}, {"id"=>"6"},
+                {"id"=>"7"}, {"id"=>"8"}, {"id"=>"9"}]
+
+        User.connection.should_receive(:select_all).with("SELECT id FROM users").and_return(@ids)
+
+        # TODO: Mock out the rand function
+        # It's kind of hard to get it to return different values each time
+        # 6.times do |i|
+        #   User.should_receive(:rand).and_return(i)
+        # end
+
+        User.should_receive(:find) #.with([1,2,3]) # Once the rand is mocked we can add the 'with'
+
+        User.random(3)
+      end
       
-      User.connection.should_receive(:select_all).with("SELECT id FROM users").and_return(@ids)
-      
-      # TODO: Mock out the rand function
-      # It's kind of hard to get it to return different values each time
-      # 6.times do |i|
-      #   User.should_receive(:rand).and_return(i)
-      # end
-      
-      User.should_receive(:find) #.with([1,2,3]) # Once the rand is mocked we can add the 'with'
-      
-      User.random(3)
-    end
+      it "should return an empty array if there are no users" do
+        User.connection.stub!(:select_all).and_return([])
+        
+        User.random(3).should == []
+      end
+    end # random users
     
     describe "search" do
       def do_search(q="ruby")
