@@ -1,1 +1,37 @@
 <% @content_title = "Resources" %>
+
+<h2>Software Craftsmanship</h2>
+
+<ul>
+  <% sc_urls = ["http://blog.objectmentor.com/",
+                "http://blog.8thlight.com/",
+                "http://codekata.pragprog.com/"] %>
+  <% sc_urls.each do |url| %>
+    <li><%= auto_link url %></li>
+  <% end %>
+</ul>
+
+<h2>Ruby</h2>
+
+<ul>
+  <% ruby_urls = ["http://rubyquiz.com/"] %>
+  <% ruby_urls.each do |url| %>
+    <li><%= auto_link url %></li>
+  <% end %>
+</ul>
+
+<h3>Rails</h3>
+
+<ul>
+  <% rails_urls = ["http://www.therailsway.com/",
+                "http://railsbridge.org/"] %>
+  <% rails_urls.each do |url| %>
+    <li><%= auto_link url %></li>
+  <% end %>
+</ul>
+
+<h2>What's your favorite Resource?</h2>
+
+<p>
+  Send us an email at <%= mail_to "codingmentors@gmail.com" %> and we'll add it!
+</p>
