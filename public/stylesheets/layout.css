@@ -8,6 +8,14 @@ div#header h1 {
   float: left;
   margin: 0.5em 0 0 0;
 }
+div#header h1 a {
+	color: #333;
+	text-decoration: none;
+}
+div#header h1 a:hover {
+	background: inherit;
+	color: inherit;
+}
 div#header div#user_links {
   text-align: right;
 }
