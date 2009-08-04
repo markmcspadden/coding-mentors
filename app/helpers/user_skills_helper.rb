@@ -35,7 +35,7 @@ module UserSkillsHelper
   
   def skill_comparison(skill, *user_skills)
     spans = []
-    for user_skill in user_skills do 
+    for user_skill in user_skills.to_a.compact do 
       name_text = user_skill.user == current_user ? "Your" : "#{user_skill.user.name}'s"
       level_text = "#{user_skill_image(user_skill.level)} #{name_text} Level"
       spans << content_tag("span", level_text, :class => "mentorship_skills")
