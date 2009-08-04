@@ -51,7 +51,7 @@
 
   <%= link_to "about", about_path %> |
   <%= link_to "blog", "#" %> | 
-  <%= link_to "support", "#" %>
+  <%= mail_to "support", "markmcspadden@gmail.com" %>
 </div>
 
 <% if Rails.env.production? %>
