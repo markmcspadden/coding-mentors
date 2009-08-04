@@ -55,5 +55,13 @@ describe Mentorship, "authorization" do
       Mentorship.is_creatable_by(nil).should be_true      
     end
   end # create
+  
+  describe "respond" do
+    it "should only be the receiver" do
+      @m1.is_respondable_by(@u1).should be_false
+      @m1.is_respondable_by(@u2).should be_true
+      @m1.is_respondable_by(nil).should be_false      
+    end
+  end
 
 end

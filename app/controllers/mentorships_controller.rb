@@ -1,6 +1,6 @@
 class MentorshipsController < ApplicationController
-  skip_before_filter :login_required
-  
+  before_filter :has_permission?
+    
   # GET /mentorships
   # GET /mentorships.xml
   def index
@@ -165,6 +165,18 @@ class MentorshipsController < ApplicationController
     respond_to do |format|
       format.html # respond.html.erb
       # format.xml  { render :xml => @mentorship }
+    end
+  end
+  
+  # Overwrite RestfulAclController method to handle non-default actions
+  private
+  def check_non_restful_route(user, klass, object, parent)
+    case params[:action]
+      when "created": object.is_updatable_by(user, parent)
+      when "accepted": object.is_respondable_by(user, parent)
+      when "rejected": object.is_respondable_by(user, parent) 
+      when "respond": object.is_respondable_by(user, parent)  
+      else super(user, klass, object, parent)
     end
   end
 end

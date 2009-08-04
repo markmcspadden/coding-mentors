@@ -12,6 +12,10 @@ module Authorization
       def is_readable_by(user, parent=nil)
         user.is_admin?
       end
+      
+      def is_respondable_by(user, parent=nil)
+        self.receiver == user
+      end
     end
 
     module SingletonMethods

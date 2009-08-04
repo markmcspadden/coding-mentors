@@ -1,10 +1,45 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe MentorshipsController do
+  it_should_behave_like "AuthorizedController"
 
   def mock_mentorship(stubs={})
     @mock_mentorship ||= mock_model(Mentorship, stubs)
   end
+  
+  describe "authorization" do
+    before(:each) do
+      controller.stub!(:administrator?).and_return(false)
+    end
+    
+    it "should user has_permission? to handle default cases" do
+      
+    end    
+    describe "respond" do
+      before(:each) do
+        Mentorship.stub!(:find).with("37").and_return(mock_mentorship)
+        @mock_mentorship.stub!(:sender).and_return(mock_model(User))
+        @mock_mentorship.stub!(:receiver).and_return(mock_model(User))
+        @mock_mentorship.stub!(:mentor).and_return(@mock_mentorship.receiver)
+        @mock_mentorship.stub!(:mentee).and_return(@mock_mentorship.sender)
+        @mock_mentorship.stub!(:selected_skills).and_return([])
+      end
+      
+      it "should not allow respond for a user that's not the receiver" do
+        @mock_mentorship.stub!(:is_respondable_by).and_return(false)
+
+        get :respond, :id => "37"
+        response.should redirect_to denied_path
+      end
+      it "should allow respond for a user that is the receiver" do
+        @mock_mentorship.stub!(:is_respondable_by).and_return(true)
+
+        get :respond, :id => "37"
+        response.should_not be_redirect
+      end      
+    end # respond
+
+  end  
   
   describe "GET index" do
     it "assigns all mentorships as @mentorships" do
