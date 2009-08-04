@@ -1,5 +1,17 @@
 module PagesHelper
   
+  def page_title
+    lead = "Coding Mentors"
+    
+    details = if @user
+                "#{@user.name} - #{@user.skills.to_a[0..4].join(", ")}"
+              else
+                "Helping Software Developers Help Software Developers"
+              end
+    
+    [lead, details].compact.join(": ")
+  end
+  
   def title_skills(learn_skill, teach_skill)
     learn_skill_text = h(learn_skill.to_s)
     teach_skill_text = h(teach_skill.to_s)
