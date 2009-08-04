@@ -9,17 +9,19 @@
     <div id="<%= dom_id user_skill %>">
       <%= display_user_skill user_skill %>
       
-      <%= link_to_remote "[edit]",  :url => edit_inline_user_skill_path(user_skill),
-                                    :method => :get,
-                                    :loading => "Element.update('#{dom_id user_skill}_edit_container', 'Editing...'); Element.hide('#{dom_id user_skill}'); Element.show('#{dom_id user_skill}_edit_container');",
-                                    :failure => "Element.update('#{dom_id user_skill}_edit_container', 'Unable to be edited :/'); Element.hide('#{dom_id user_skill}_edit_container'); Element.show('#{dom_id user_skill}');",
-                                    :success => "Element.update('#{dom_id user_skill}_edit_container', request.responseText); resetAvailableSkills([ #{user_skills_array} ]); attachAutoComplete(#{user_skill.id})" %>
-      <%= link_to_remote "[x]", :url => user_skill_path(user_skill),
-                                :method => :delete,
-                                :confirm => "Are you sure?",
-                                :loading => "Element.update('#{dom_id user_skill}', 'Deleting...');",
-                                :failure => "Element.update('#{dom_id user_skill}', 'Skill unable to be removed. :/');",
-                                :success => "Element.update('#{dom_id user_skill}', 'Deleted'); $('#{dom_id user_skill}').fade()"%>
+      <% if updatable(user) %>
+        <%= link_to_remote "[edit]",  :url => edit_inline_user_skill_path(user_skill),
+                                      :method => :get,
+                                      :loading => "Element.update('#{dom_id user_skill}_edit_container', 'Editing...'); Element.hide('#{dom_id user_skill}'); Element.show('#{dom_id user_skill}_edit_container');",
+                                      :failure => "Element.update('#{dom_id user_skill}_edit_container', 'Unable to be edited :/'); Element.hide('#{dom_id user_skill}_edit_container'); Element.show('#{dom_id user_skill}');",
+                                      :success => "Element.update('#{dom_id user_skill}_edit_container', request.responseText); resetAvailableSkills([ #{user_skills_array} ]); attachAutoComplete(#{user_skill.id})" %>
+        <%= link_to_remote "[x]", :url => user_skill_path(user_skill),
+                                  :method => :delete,
+                                  :confirm => "Are you sure?",
+                                  :loading => "Element.update('#{dom_id user_skill}', 'Deleting...');",
+                                  :failure => "Element.update('#{dom_id user_skill}', 'Skill unable to be removed. :/');",
+                                  :success => "Element.update('#{dom_id user_skill}', 'Deleted'); $('#{dom_id user_skill}').fade()"%>
+      <% end %>
     </div>
     <div id="<%= dom_id user_skill %>_edit_container" style="display:none;"></div>
   <% end %>

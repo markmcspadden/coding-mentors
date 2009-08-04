@@ -10,7 +10,7 @@
 <div class="skinny_left">
   <%= user_image @user, :gravatar_link => true %>
   <p>
-    <%= link_to 'Edit Profile', edit_user_path(@user) %>
+    <%= link_to('Edit Profile', edit_user_path(@user)) if updatable(@user) %>
   </p>
 </div>
 
@@ -19,7 +19,7 @@
   <div class="user_dets">
     <h3>
       Skills
-      <%= link_to_function "add", "Element.toggle('new_skill')", :class => "action" %>
+      <%= link_to_function("add", "Element.toggle('new_skill')", :class => "action") if updatable(@user) %>
     </h3>
     <div id="skills_container">
       <%= render "/user_skills/skills", :user => @user %>
@@ -29,7 +29,7 @@
   <div class="user_dets">
     <h3>
       Availability
-      <%= link_to "edit", edit_availability_user_path(@user), :class => "action" %>
+      <%= link_to("edit", edit_availability_user_path(@user), :class => "action") if updatable(@user) %>
     </h3>
 
 
