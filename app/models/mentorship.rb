@@ -1,4 +1,7 @@
 class Mentorship < ActiveRecord::Base
+  ### AUTHORIZATION
+  include Authorization::Mentorship::InstanceMethods
+  extend Authorization::Mentorship::SingletonMethods
 
   belongs_to :mentor, :class_name => "User"
   belongs_to :mentee, :class_name => "User"
