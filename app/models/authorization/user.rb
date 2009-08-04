@@ -2,7 +2,11 @@ module Authorization
   module User
     module InstanceMethods
       def administrator?
-        false
+        if self.email == "markmcspadden@gmail.com"
+          true
+        else
+          false
+        end
       end
       alias is_admin? administrator?
       

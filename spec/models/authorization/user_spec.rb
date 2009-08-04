@@ -7,7 +7,10 @@ describe User, "authorization" do
   end
   
   describe "administrator" do
-    it "should not be anyone" do
+    it "should be markmcspadden@gmail.com" do
+      User.new(:email => "markmcspadden@gmail.com").should be_administrator
+    end
+    it "should not be anyone that's not markmcspadden@gmail.com" do
       @u1.should_not be_administrator
       @u2.should_not be_administrator      
     end
