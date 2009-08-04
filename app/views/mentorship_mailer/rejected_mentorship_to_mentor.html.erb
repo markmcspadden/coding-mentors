@@ -1,14 +1,24 @@
-Hey <%= @receiver.name %>,
+<p>
+  Hey <%= @receiver.name %>,
+</p>
 
-<%= @sender.name %> will not be available to be your apprentice in <%= @skills %>.
+<p>
+  <%= @sender.name %> will not be available to be your apprentice in <%= @skills %>.
+</p>
 
 <% unless @mentorship.receiver_note.blank? -%>
-<%= @sender.name %> did want to pass along this note:
+<p>
+  <%= @sender.name %> did want to pass along this note:
+</p>
 <blockquote>
-I'm really swamped this month. Maybe next month?
+  I'm really swamped this month. Maybe next month?
 </blockquote>
 <% end -%>
 
-We encourage you to keep looking for an apprentice and are more than happy to help in any way that we can.
+<p>
+  We encourage you to keep looking for an apprentice and are more than happy to help in any way that we can.
+</p>
 
-Your Friends at Coding Mentors
+<p>
+  -- Your Friends at Coding Mentors
+</p>

@@ -1,16 +1,28 @@
-Hey <%= @receiver.name %>,
+<p>
+  Hey <%= @receiver.name %>,
+</p>
 
-<%= @sender.name %> has agreed to mentor you in <%= @skills %>.
+<p>
+  <%= @sender.name %> has agreed to mentor you in <%= @skills %>.
+</p>
 
-<%= @sender.name %>'s email address is <%= @sender.email %>.
+<p>
+  <%= @sender.name %>'s email address is <%= @sender.email %>.
+</p>
 
 <% unless @mentorship.receiver_note.blank? -%>
-<%= @sender.name %> also wanted to send you the following note:
+<p>
+  <%= @sender.name %> also wanted to send you the following note:
+</p>
 <blockquote>
-<%= @mentorship.receiver_note %>
+  <%= @mentorship.receiver_note %>
 </blockquote>
 <% end -%>
 
-Good luck on this endeavor. We'll be checking in to see how things are going!
+<p>
+  Good luck on this endeavor. We'll be checking in to see how things are going!
+</p>
 
-Your Friends at Coding Mentors
+<p>
+  -- Your Friends at Coding Mentors
+</p>
