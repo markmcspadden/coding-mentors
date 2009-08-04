@@ -38,6 +38,10 @@ describe User do
     it "should have skills (through user_skills)" do
       @user.should respond_to("skills")
     end
+    it "should find mentorships_to_respond_to" do
+      Mentorship.should_receive(:find).with(:all, :conditions => ["receiver_id = ? AND accepted_at IS NULL AND rejected_at IS NULL", @user.id])
+      @user.mentorships_to_respond_to
+    end
   end # associations
   
 

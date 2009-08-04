@@ -40,6 +40,33 @@ describe PagesController do
       do_get
       assigns[:skills].should == @skills
     end
+
+    describe "flash[:notice]" do
+      before(:each) do
+        @user = mock_model(User)
+        controller.stub!(:current_user).and_return(@user)        
+      end
+      
+      it "should assign any mentorships needing response if there is a current user with outstanding mentorships" do      
+        @m1 = mock_model(Mentorship)
+        @user.should_receive(:mentorships_to_respond_to).and_return([@m1])        
+        
+        do_get
+        flash[:notice].to_s.strip.should == "You have requests awaiting your response:<br/>\n          <a href=\"/mentorships/#{@m1.id}/respond\">Respond</a>"
+      end
+      it "should not assign if there are no current_user" do
+        controller.stub!(:current_user).and_return(nil)
+      
+        do_get
+        flash[:notice].should be_nil  
+      end    
+      it "should not assign if there are no outstanding mentorships" do
+        @user.should_receive(:mentorships_to_respond_to).and_return([])
+      
+        do_get
+        flash[:notice].should be_nil
+      end
+    end #flash[:notice]
     
     it "should be successful" do
       do_get

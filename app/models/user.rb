@@ -78,6 +78,13 @@ class User < ActiveRecord::Base
     user_skills_by_level(level).collect{ |us| us.skill }
   end
   
+  ###
+  ### Mentorships
+  ###
+  def mentorships_to_respond_to
+    Mentorship.find(:all, :conditions => ["receiver_id = ? AND accepted_at IS NULL AND rejected_at IS NULL", self.id])    
+  end
+  
   # Mentoring status
   def current_mentoring_mentorship
     Mentorship.find(:first, :conditions => ["mentor_id = ? AND accepted_at IS NOT NULL AND completed_at IS NULL", self.id])

@@ -8,6 +8,16 @@ class PagesController < ApplicationController
     
     # Get some random skills to display
     @skills = Skill.random(2)
+    
+    if current_user
+      outstandings = current_user.mentorships_to_respond_to
+      if !outstandings.empty?
+        flash[:notice] = <<-EOS
+          You have requests awaiting your response:<br/>
+          #{outstandings.collect{ |m| "<a href=\"#{respond_mentorship_path(m)}\">Respond</a>" }.join("<br/>")}
+        EOS
+      end
+    end
   end
   
   # GET /search
