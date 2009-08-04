@@ -13,6 +13,15 @@ span.mentorship_skills {
 }
 
 .title_skill {
+	border: 1px solid #ffffaa;
 	background:#ffffaa;
 	padding:7px;
+	text-decoration: none;
+	color: #000;	
+}
+.title_skill:hover {
+	border: 1px solid #ffff00;
+	text-decoration: none;
+	background: #ffffaa;
+	color: #000;	
 }

@@ -13,11 +13,11 @@ describe PagesHelper do
       @s1 = mock_model(Skill, :to_s => "Ruby")
       @s2 = mock_model(Skill, :to_s => "Erlang")
 
-      helper.title_skills(@s2, @s1).should == "Learn <span class=\"title_skill\">Erlang</span> &nbsp;&nbsp;<small>or</small>&nbsp;&nbsp; Teach <span class=\"title_skill\">Ruby</span>"
+      helper.title_skills(@s2, @s1).should == "Learn <a href=\"/search?q=Erlang\" class=\"title_skill\">Erlang</a> &nbsp;&nbsp;<small>or</small>&nbsp;&nbsp; Teach <a href=\"/search?q=Ruby\" class=\"title_skill\">Ruby</a>"
     end
     
     it "should handle the case where the skills are both nil" do
-      helper.title_skills(nil, nil).should == "Learn <span class=\"title_skill\"></span> &nbsp;&nbsp;<small>or</small>&nbsp;&nbsp; Teach <span class=\"title_skill\"></span>"
+      helper.title_skills(nil, nil).should == "Learn <a href=\"/search?q=\" class=\"title_skill\"></a> &nbsp;&nbsp;<small>or</small>&nbsp;&nbsp; Teach <a href=\"/search?q=\" class=\"title_skill\"></a>"
     end
   end # title skills
 
