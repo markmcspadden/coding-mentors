@@ -34,8 +34,12 @@
 <div id="content">
   <h1><%= @content_title %></h1>
 
-  <p style="color: green; border: 1px solid green; padding: 5px;"><%= flash[:notice] %></p>
-  <p style="color: red; border: 1px solid red; padding: 5px;"><%= flash[:error] %></p>
+  <% unless flash[:notice].blank? %>
+    <p style="color: green; border: 1px solid green; padding: 5px;"><%= flash[:notice] %></p>
+  <% end %>
+  <% unless flash[:error].blank? %>
+    <p style="color: red; border: 1px solid red; padding: 5px;"><%= flash[:error] %></p>
+  <% end %>
 
   <%= yield %>
 </div>
