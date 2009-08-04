@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  
+  skip_before_filter :login_required, :only => [:index, :show, :new, :create]
+  
+  before_filter :has_permission?
+  
   # GET /users
   # GET /users.xml
   def index
@@ -110,6 +115,15 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  # Overwrite RestfulAclController method to handle non-default actions
+  private
+  def check_non_restful_route(user, klass, object, parent)
+    case params[:action]
+      when "edit_availability": object.is_updatable_by(user, parent)
+      else super(user, klass, object, parent)
     end
   end
 end

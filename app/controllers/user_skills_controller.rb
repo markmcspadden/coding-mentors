@@ -1,4 +1,6 @@
 class UserSkillsController < ApplicationController
+  skip_before_filter :login_required
+
   # GET /user_skills
   # GET /user_skills.xml
   def index

@@ -1,10 +1,59 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
-
+  it_should_behave_like "AuthorizedController"
+  
   def mock_user(stubs={})
     @mock_user ||= mock_model(User, stubs)
   end
+  
+  describe "authorization" do
+    before(:each) do
+      controller.stub!(:administrator?).and_return(false)
+    end
+    
+    it "should user has_permission? to handle default cases" do
+      
+    end
+    # SPOT CHECK?
+    describe "edit" do
+      it "should not allow edit_availability for a user that's not the fetched user" do
+        User.stub!(:find).with("37").and_return(@current_user)
+        @current_user.stub!(:is_readable_by).and_return(true)
+        @current_user.stub!(:is_updatable_by).and_return(false)
+
+        get :edit, :id => "37"
+        response.should redirect_to denied_path
+      end
+      it "should allow edit_availability for a user that's not the fetched user" do
+        User.stub!(:find).with("37").and_return(@current_user)
+        @current_user.stub!(:is_updatable_by).and_return(true)
+
+        get :edit, :id => "37"
+        response.should be_success
+      end
+    end # edit
+    
+    describe "edit_availability" do
+      it "should not allow edit_availability for a user that's not the fetched user" do
+        User.stub!(:find).with("37").and_return(mock_user)
+        @mock_user.stub!(:is_readable_by).and_return(true)
+        @mock_user.stub!(:is_updatable_by).and_return(false)
+
+        get :edit_availability, :id => "37"
+        response.should redirect_to denied_path
+      end
+      it "should allow edit_availability for a user that's not the fetched user" do
+        User.stub!(:find).with("37").and_return(mock_user)
+        @mock_user.stub!(:is_readable_by).and_return(true)
+        @mock_user.stub!(:is_updatable_by).and_return(true)
+
+        get :edit_availability, :id => "37"
+        response.should be_success
+      end      
+    end # edit_availability
+
+  end  
   
   describe "GET index" do
     it "assigns all users as @users" do
@@ -16,7 +65,7 @@ describe UsersController do
 
   describe "GET show" do
     it "assigns the requested user as @user" do
-      User.stub!(:find).with("37", :include => [:skills]).and_return(mock_user)
+      User.should_receive(:find).with("37", :include => [:skills]).and_return(mock_user)
       get :show, :id => "37"
       assigns[:user].should equal(mock_user)
     end

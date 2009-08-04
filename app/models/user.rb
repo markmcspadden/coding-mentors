@@ -2,6 +2,7 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
   ### AUTHORIZATION
+  logical_parent nil
   include Authorization::User::InstanceMethods
   extend Authorization::User::SingletonMethods
   

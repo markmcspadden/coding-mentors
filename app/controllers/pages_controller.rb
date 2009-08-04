@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  skip_before_filter :login_required
+  
   # GET /
   def home    
     # Get some random users to display

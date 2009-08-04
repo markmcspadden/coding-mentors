@@ -1,4 +1,6 @@
 class MentorshipsController < ApplicationController
+  skip_before_filter :login_required
+  
   # GET /mentorships
   # GET /mentorships.xml
   def index

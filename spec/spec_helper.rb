@@ -45,3 +45,16 @@ Spec::Runner.configure do |config|
   # 
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
+
+describe "AuthorizedController", :shared => true do
+  before(:each) do
+    @current_user = mock_model(User, 
+                                :login => "markmcspadden@gmail.com",
+                                :is_admin? => true)
+    
+    controller.stub!(:current_user).and_return(@current_user)
+    controller.stub!(:administrator?).and_return(true)
+    
+    User.stub!(:find).with(@current_user.id.to_s).and_return(@current_user)
+  end
+end
