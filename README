@@ -14,3 +14,12 @@ That's what we are and that's what we're doing. Feel free to jump in and help ou
 * Create a global key at recaptcha.net. (You can tie the key to a domain if you'd like, but global is easiest to get up and running)
 * Create config/initializers/recaptcha_dev.rb OR config/initializers/recaptcha_pro.rb based off of config/initializers/recaptcha.rb
 * Change KEY in your new recaptcha_xxx.rb to match your public and private key from RECAPTCHA
+
+== Contributors
+
+* Mark McSpadden
+* Derek Lane
+
+== License
+
+See LICENSE
